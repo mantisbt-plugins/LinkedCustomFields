@@ -33,7 +33,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
     
     public function hooks() {
         return array(
-            'EVENT_MENU_MANAGE' => 'manage_custom_field_links'
+            'EVENT_MENU_MANAGE' => 'manage_custom_field_links',
+            'EVENT_LAYOUT_RESOURCES' => 'resources',
         );
     }
     
@@ -41,6 +42,17 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
         
         return array( '<a href="' . plugin_page( 'configure_custom_field_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
     }
+    
+    function resources( $p_event ) {
+        
+        $t_bug_id = gpc_get_int('bug_id', -1);
+        if ( $t_bug_id != -1 ) {
+            return '<script type="text/javascript" src="' . plugin_page( 'bug_page_custom_field_links.php' ) . '&amp;bug_id='. $t_bug_id .'"></script>';
+        }
+        
+        
+        
+    }    
     
     public function init() {
         

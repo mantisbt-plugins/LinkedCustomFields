@@ -69,6 +69,11 @@ class LinkedCustomFieldsDao {
 
 class JavascriptUtils {
     
+    const LOG_DEBUG = 1;
+    const LOG_INFO = 2;
+    const LOG_WARN = 3;
+    const LOG_ERROR = 4;
+    
     static function toJSArray( $p_array ) {
         
         $t_field_values_js = '[ ';
@@ -81,6 +86,32 @@ class JavascriptUtils {
         $t_field_values_js .= ']';
         
         return $t_field_values_js;
+    }
+    
+    static function consoleLog( $p_message, $p_level = self::LOG_INFO) {
+        
+        
+        $t_method;
+        switch ( $p_level ) {
+            case self::LOG_DEBUG:
+                $t_method = 'debug';
+                break;
+                
+            case self::LOG_INFO:
+                $t_method = 'info';
+                break;
+                
+            case self::LOG_WARN:
+                $t_method = 'warn';
+                break;
+                
+            case self::LOG_ERROR:
+                $t_method = 'error';
+                break;
+        }
+        
+        if ( $t_method )
+            return 'if ( console && console.'.$t_method.' ) console.' . $t_method .'("' . $p_message .'");'."\n";
     }
 }
 ?>
