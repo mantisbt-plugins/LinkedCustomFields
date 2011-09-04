@@ -41,7 +41,13 @@
 	    $t_custom_field_def = custom_field_get_definition( $t_custom_field );
 	    echo '<tr '. helper_alternate_class() .'>';
 	    echo '<td>'. string_display( $t_custom_field_def['name'] ).'</td>';
-	    echo '<td> None </td>';
+	    $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field );
+	    if ( $t_linked_field_id ) {
+            $t_linked_field = custom_field_get_definition( $t_linked_field_id );
+            echo '<td>' . $t_linked_field['name'] .'</td>';	        
+	    } else {
+	        echo '<td> None </td>';
+	    }
 	    echo '<td>';
 	    if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM ) {
 	        print_link(plugin_page('configure_custom_field_link.php&custom_field_id='.$t_custom_field), plugin_lang_get('edit'));

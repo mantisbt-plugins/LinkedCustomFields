@@ -22,6 +22,7 @@
 	html_page_top( plugin_lang_get( 'configure_custom_field_links' ) );
 
 	$f_custom_field = custom_field_get_definition( gpc_get_int('custom_field_id') );
+	$t_linked_custom_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $f_custom_field['id'] );
 	
 	$t_target_candidates = array();
 	
@@ -61,7 +62,9 @@
                             continue;
                         }
                         
-                        echo '<option value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
+                        $t_selected = $t_linked_custom_field_id == $t_target_candidate['id'] ? ' selected="selected"' : "";
+                        
+                        echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
                     } 
                 ?>
                 </select>            
@@ -101,15 +104,9 @@ var targetValues = {};
 <?php 
     foreach ( $t_target_candidates as $t_target_candidate ) {
         
-        $t_field_values_js = '[ ';
-        foreach (  explode( '|', $t_target_candidate['possible_values'] ) as $t_custom_field_value ) {
-            $t_field_values_js .= '"'.$t_custom_field_value.'" ,';
-        }
-        $t_field_values_js = rtrim($t_field_values_js, ',');
-        $t_field_values_js .= ']';
+        $t_field_values_js = JavascriptUtils::toJSArray( explode( '|', $t_target_candidate['possible_values'] ) );
         echo 'targetValues["' . $t_target_candidate['id'] .'"] = '.$t_field_values_js." ;\n";
     }
-
 ?>
 
 var refreshTargetFieldOptions = function(targetFieldId) {
@@ -130,9 +127,19 @@ var refreshTargetFieldOptions = function(targetFieldId) {
 	    }
 	}
 }
-                
-jQuery('#target_custom_field').change(function() {
-	refreshTargetFieldOptions(jQuery(this).val());
+jQuery(document).ready(function() {
+
+	refreshTargetFieldOptions(jQuery('#target_custom_field').val());
+	
+    jQuery('#target_custom_field').change(function() {
+    	refreshTargetFieldOptions(jQuery(this).val());
+    });
+    <?php 
+        $t_existing_values = LinkedCustomFieldsDao::getLinkedValuesMap( $f_custom_field['id'] );
+        foreach ( $t_existing_values as $t_source_value => $t_values ) {
+            echo 'jQuery("#custom_field_linked_values_'.$t_source_value.'").val('. JavascriptUtils::toJSArray( $t_values ). ')'."\n";
+        }
+    ?>
 });
 </script>
 <?php 
