@@ -17,8 +17,6 @@
 
 	require_once( 'core.php' );
 
-	auth_reauthenticate();
-	
 	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 	
 	html_page_top( plugin_lang_get( 'configure_custom_field_links' ) );
@@ -37,8 +35,12 @@
         
         $t_target_candidates[] = $t_custom_field_def;
     }
+    
 ?>
 
+
+<form method="post" action="<?php echo plugin_page('configure_custom_field_link_update.php') ?>">
+<?php echo form_security_field( 'configure_custom_field_link' ) ?>
 <br />
 <input type="hidden" name="custom_field_id" id="custom_field_id" value="<?php echo gpc_get_int('custom_field_id')?>" />
 <table class="width50" align="center">
@@ -80,11 +82,20 @@
         <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_possible_value ) { ?>
             <tr <?php echo helper_alternate_class() ?>>
                 <td> <?php echo $t_possible_value ?></td>
-                <td><select id="custom_field_linked_values_<?php echo $t_possible_value?>" name="custom_field_linked_values_<?php echo $t_possible_value?>" multiple="multiple"></select></td>
+                <td><select id="custom_field_linked_values_<?php echo $t_possible_value?>" name="custom_field_linked_values_<?php echo $t_possible_value?>[]" multiple="multiple"></select></td>
             </tr>
         <?php } ?>
-    </tbody>
+            <tr>
+            	<td>
+            		&#160;
+            	</td>
+            	<td>
+            		<input type="submit" class="button" value="<?php echo plugin_lang_get( 'submit' ) ?>" />
+            	</td>
+            </tr>
+        </tbody>
 </table>
+</form>
 <script type="text/javascript">
 var targetValues = {};
 <?php 

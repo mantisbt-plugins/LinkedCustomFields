@@ -1,0 +1,41 @@
+<?php
+# Copyright (c) 2011 Robert Munteanu (robert@lmn.ro)
+
+# Linked custom fields for MantisBT is free software:
+# you can redistribute it and/or modify it under the terms of the GNU
+# General Public License as published by the Free Software Foundation,
+# either version 2 of the License, or (at your option) any later version.
+#
+# Linked custom fields plugin for MantisBT is distributed in the hope
+# that it will be useful, but WITHOUT ANY WARRANTY; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linked custom fields plugin for MantisBT.
+# If not, see <http://www.gnu.org/licenses/>.
+
+	require_once( 'core.php' );
+
+	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
+	
+	form_security_validate( 'configure_custom_field_link' );
+	
+	$t_value_mappings = array();
+	
+	foreach ( $_POST as $f_post_key => $f_post_value ) {
+	    
+	    if ( strpos($f_post_key, 'custom_field_linked_values_') === 0 ) {
+	        
+	        $t_source_value = substr( $f_post_key, strlen ('custom_field_linked_values_') );
+	        $t_linked_value = gpc_get( $f_post_key );
+            $t_value_mappings[$t_source_value] = $t_linked_value;
+	    }
+	}
+	
+	LinkedCustomFieldsDao::replaceValues( gpc_get_int('custom_field_id'), gpc_get_int('target_custom_field') , $t_value_mappings);
+
+    form_security_purge( 'configure_custom_field_link' );
+    
+    header("Location: " . plugin_page('configure_custom_field_links.php'));
+?>

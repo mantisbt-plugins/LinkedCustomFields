@@ -42,6 +42,11 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
         return array( '<a href="' . plugin_page( 'configure_custom_field_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
     }
     
+    public function init() {
+        
+        require_once 'LinkedCustomFields.API.php';
+    }
+    
     public function schema() {
         return array(
             array( 'CreateTableSQL', 

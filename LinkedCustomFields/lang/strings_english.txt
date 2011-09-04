@@ -26,4 +26,5 @@ $s_plugin_LinkedCustomFields_linked_to = 'Linked to';
 $s_plugin_LinkedCustomFields_unsupported_field_type = 'Only supported for fields of type %s';
 $s_plugin_LinkedCustomFields_source_field_value = 'Source field value';
 $s_plugin_LinkedCustomFields_target_field_values = 'Target field values';
+$s_plugin_LinkedCustomFields_submit = 'Submit';
 
