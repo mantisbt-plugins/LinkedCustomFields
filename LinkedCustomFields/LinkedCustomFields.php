@@ -41,5 +41,18 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
         
         return array( '<a href="' . plugin_page( 'configure_custom_field_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
     }
+    
+    public function schema() {
+        return array(
+            array( 'CreateTableSQL', 
+                array( plugin_table( 'data' ), "
+                    custom_field_id    I NOTNULL,
+                    custom_field_value C(255) NOTNULL DEFAULT \" '' \",
+                    target_field_id    I NOTNULL,
+                    target_field_values    C(255) NOTNULL DEFAULT \" '' \"
+                ")
+            )
+        );
+    }
 }
 ?>
