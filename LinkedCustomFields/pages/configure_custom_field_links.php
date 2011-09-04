@@ -19,6 +19,8 @@
 
 	auth_reauthenticate();
 	
+	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
+	
 	html_page_top( plugin_lang_get( 'configure_custom_field_links' ) );
 
 	$t_custom_fields = custom_field_get_ids();
