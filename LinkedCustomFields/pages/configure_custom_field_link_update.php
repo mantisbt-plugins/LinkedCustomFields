@@ -32,10 +32,14 @@
             $t_value_mappings[$t_source_value] = $t_linked_value;
 	    }
 	}
-	
-	LinkedCustomFieldsDao::replaceValues( gpc_get_int('custom_field_id'), gpc_get_int('target_custom_field') , $t_value_mappings);
 
-    form_security_purge( 'configure_custom_field_link' );
-    
-    header("Location: " . plugin_page('configure_custom_field_links.php'));
+	form_security_purge( 'configure_custom_field_link' );
+	
+	if ( LinkedCustomFieldsDao::getLinkedFieldId( gpc_get_int('target_custom_field') ) ) {
+	    // plugin_get_current('target_field_already_linked')
+	    trigger_error( ERROR_GENERIC , ERROR );
+	} else {
+    	LinkedCustomFieldsDao::replaceValues( gpc_get_int('custom_field_id'), gpc_get_int('target_custom_field') , $t_value_mappings);
+        header("Location: " . plugin_page('configure_custom_field_links.php'));
+	}
 ?>
