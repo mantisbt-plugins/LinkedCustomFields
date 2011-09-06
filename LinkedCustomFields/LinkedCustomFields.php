@@ -49,9 +49,6 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
         if ( $t_bug_id != -1 ) {
             return '<script type="text/javascript" src="' . plugin_page( 'bug_page_custom_field_links.php' ) . '&amp;bug_id='. $t_bug_id .'"></script>';
         }
-        
-        
-        
     }    
     
     public function init() {
