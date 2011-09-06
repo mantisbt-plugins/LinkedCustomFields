@@ -19,6 +19,10 @@ var linkedFieldValues = {};
 
 foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
     
+    if ( ! ( custom_field_has_write_access($t_custom_field_id, $t_bug_id) ) ) {
+        continue;
+    }
+    
     $t_linked_values = LinkedCustomFieldsDao::getLinkedValuesMap( $t_custom_field_id );
     if ( count ( $t_linked_values ) > 0 ) {
         $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field_id );
