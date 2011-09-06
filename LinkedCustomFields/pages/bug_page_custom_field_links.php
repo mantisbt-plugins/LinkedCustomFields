@@ -17,6 +17,7 @@ $t_all_custom_field_ids = custom_field_get_linked_ids( $t_project_id );
 var linkedFieldValues = {};
 var allFieldValues = {};
 var bindings = {};
+var savedValues = {};
 <?php
 
 foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
@@ -35,7 +36,7 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
         echo JavascriptUtils::consoleLog('Found linked field with id '. $t_custom_field_id . ' , linked to ' . $t_linked_field_id);
         
         $t_linked_field = custom_field_get_definition( $t_linked_field_id );
-        
+        echo 'savedValues["' . $t_linked_field_id .'"] = "' . custom_field_get_value(  $t_linked_field_id, $t_bug_id ) . '"'."\n";
         echo 'bindings["' . $t_custom_field_id.'"] = "'. $t_linked_field_id.'";'."\n";
         echo 'allFieldValues["' .$t_custom_field_id.'"] = ' . JavascriptUtils::toJSArray( explode('|', $t_linked_field['possible_values']) ).";\n";
         echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
@@ -54,7 +55,9 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
         targetValues = allFieldValues[fieldId] ;
     }
     
-    var targetFieldRef = jQuery('[name=custom_field_' + bindings[fieldId] +']'); 
+    var targetFieldId = bindings[fieldId];
+    
+    var targetFieldRef = jQuery('[name=custom_field_' + targetFieldId  +']'); 
     
     targetFieldRef.empty();
     for ( var i = 0 ; i < targetValues.length; i++ ) {
@@ -64,6 +67,8 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
             attr('value', targetValue).
             text(targetValue));
     }
+    
+    targetFieldRef.val(savedValues[targetFieldId]);
     
     console.info("Legal values should be " + fieldValue + " -> " + targetValues);
 };
