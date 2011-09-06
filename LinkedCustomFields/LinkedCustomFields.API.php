@@ -79,7 +79,7 @@ class JavascriptUtils {
         $t_field_values_js = '[ ';
         
         foreach (  $p_array as $t_custom_field_value ) {
-            $t_field_values_js .= '"'.$t_custom_field_value.'" ,';
+            $t_field_values_js .= '"'.string_attribute($t_custom_field_value).'" ,';
         }
         
         $t_field_values_js = rtrim($t_field_values_js, ',');

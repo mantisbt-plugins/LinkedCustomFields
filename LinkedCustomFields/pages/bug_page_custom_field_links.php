@@ -31,12 +31,12 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
     if ( count ( $t_linked_values ) > 0 ) {
         
         // values from $t_custom_field_id trigger filter values from $t_linked_field_id 
-        
+
         $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field_id );
         echo JavascriptUtils::consoleLog('Found linked field with id '. $t_custom_field_id . ' , linked to ' . $t_linked_field_id);
         
         $t_linked_field = custom_field_get_definition( $t_linked_field_id );
-        echo 'savedValues["' . $t_linked_field_id .'"] = "' . custom_field_get_value(  $t_linked_field_id, $t_bug_id ) . '"'."\n";
+        echo 'savedValues["' . $t_linked_field_id .'"] = "' . string_attribute( custom_field_get_value(  $t_linked_field_id, $t_bug_id ) ) . '"'."\n";
         echo 'bindings["' . $t_custom_field_id.'"] = "'. $t_linked_field_id.'";'."\n";
         echo 'allFieldValues["' .$t_custom_field_id.'"] = ' . JavascriptUtils::toJSArray( explode('|', $t_linked_field['possible_values']) ).";\n";
         echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
