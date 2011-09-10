@@ -17,11 +17,14 @@ class LinkedCustomFieldsDao {
         db_query_bound( $t_query, array( $p_source_field_id )) ;
 
         $t_insert_query = "INSERT INTO " . $t_data_table . "
-            (custom_field_id, custom_field_value, target_field_id, target_field_values)
-            VALUES ( " . db_param() .", " . db_param().", " . db_param().", ".db_param()." )";
+            (custom_field_id, custom_field_value_order, custom_field_value, target_field_id, target_field_values)
+            VALUES ( " . db_param() .", " . db_param().", " . db_param().", ". db_param().", " .db_param()." )";
+        
+        $t_idx = 0 ;
         
         foreach ( $p_value_mappings as $t_key => $t_value ) {
-            db_query_bound($t_insert_query, array( $p_source_field_id, $t_key, $p_target_field_id, implode('|', $t_value)));
+            db_query_bound($t_insert_query, array( $p_source_field_id, $t_idx, $t_key, $p_target_field_id, implode('|', $t_value)));
+            $t_idx++;
         }
     }
     
@@ -46,7 +49,8 @@ class LinkedCustomFieldsDao {
     
     static function getLinkedValuesMap( $p_source_field_id ) {
         
-        $t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table('data') . " WHERE custom_field_id=".db_param();
+        $t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table('data') . 
+                    " WHERE custom_field_id=".db_param() ." ORDER BY custom_field_value_order" ;
         $t_result = db_query_bound( $t_query, array ( $p_source_field_id ) );
         if ( 0 == db_num_rows ( $t_result ) ) {
             return array();
@@ -59,7 +63,7 @@ class LinkedCustomFieldsDao {
             $t_source_value = $t_array['custom_field_value'];
             $t_target_values_imploded = $t_array['target_field_values'];
             
-            $t_return[$t_source_value] = explode( '|', $t_target_values_imploded );
+            $t_return[] = array($t_source_value, explode( '|', $t_target_values_imploded ));
         }
         
         return $t_return;

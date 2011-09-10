@@ -41,7 +41,8 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
         echo 'allFieldValues["' .$t_custom_field_id.'"] = ' . JavascriptUtils::toJSArray( explode('|', $t_linked_field['possible_values']) ).";\n";
         echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
         
-        foreach ( $t_linked_values as $t_source_value => $t_target_values ) {
+        foreach ( $t_linked_values as $t_linked_value_arr ) {
+            list($t_source_value, $t_target_values ) = $t_linked_value_arr;
             echo 'linkedFieldValues["'.$t_custom_field_id.'"]["'. $t_source_value.'"] = ' . JavascriptUtils::toJSArray( $t_target_values ).";\n";
         }
     }

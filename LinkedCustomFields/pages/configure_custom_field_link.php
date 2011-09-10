@@ -82,10 +82,10 @@
         </tr>
     </thead>
     <tbody>
-        <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_possible_value ) { ?>
+        <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_idx =>  $t_possible_value ) { ?>
             <tr <?php echo helper_alternate_class() ?>>
                 <td> <?php echo $t_possible_value ?></td>
-                <td><select id="custom_field_linked_values_<?php echo $t_possible_value?>" name="custom_field_linked_values_<?php echo $t_possible_value?>[]" multiple="multiple"></select></td>
+                <td><select id="custom_field_linked_values_<?php echo $t_idx?>" name="custom_field_linked_values_<?php echo $t_idx?>[]" multiple="multiple"></select></td>
             </tr>
         <?php } ?>
             <tr>
@@ -113,14 +113,16 @@ var refreshTargetFieldOptions = function(targetFieldId) {
     var sourceValues = targetValues[jQuery("#custom_field_id").val()];
     var targetDisplayValues = targetValues[targetFieldId];
 
+    var i = 0 ;
     for ( field in sourceValues ) {
 	    var sourceValue = sourceValues[field];
-	    var control = jQuery('#custom_field_linked_values_' + sourceValue);
+	    var control = jQuery('#custom_field_linked_values_' + i);
+	    i++;
 	    
 	    control.empty();
 	    for ( field in targetDisplayValues ) {
 		    var displayValue = targetDisplayValues[field];
-	    	control.append(jQuery('<option></option>', { 
+	    	control.append(jQuery('<option></option>', {
 		    	value: displayValue,
 				text: displayValue
 			}));
@@ -136,8 +138,11 @@ jQuery(document).ready(function() {
     });
     <?php 
         $t_existing_values = LinkedCustomFieldsDao::getLinkedValuesMap( $f_custom_field['id'] );
-        foreach ( $t_existing_values as $t_source_value => $t_values ) {
-            echo 'jQuery("#custom_field_linked_values_'.$t_source_value.'").val('. JavascriptUtils::toJSArray( $t_values ). ')'."\n";
+        foreach ( $t_existing_values as $t_idx => $t_values ) {
+
+            list( $t_key, $t_value) = $t_values;
+            echo 'jQuery("#custom_field_linked_values_'.$t_idx.'").val('. JavascriptUtils::toJSArray( $t_value ). ')'."\n";
+            $t_idx++;
         }
     ?>
 });

@@ -61,6 +61,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
             array( 'CreateTableSQL', 
                 array( plugin_table( 'data' ), "
                     custom_field_id    I NOTNULL,
+                    custom_field_value_order    I NOTNULL,
                     custom_field_value C(255) NOTNULL DEFAULT \" '' \",
                     target_field_id    I NOTNULL,
                     target_field_values    C(255) NOTNULL DEFAULT \" '' \"
