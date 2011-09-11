@@ -71,7 +71,7 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
     if ( fieldValue instanceof Array) {
         for ( var i = 0 ; i < fieldValue.length; i++) {
             var singleValue = fieldValue[i];
-            var currentTargetValues = linkedFieldValues[fieldId][singleValue];
+            var currentTargetValues = linkedFieldValues[fieldId][singleValue] || [];
             for ( var j = 0 ; j < currentTargetValues.length; j++ ) {
                 targetValues.push(currentTargetValues[j]);
             }
@@ -82,7 +82,7 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
         targetValues = linkedFieldValues[fieldId][fieldValue];
     }
     
-    if ( ! targetValues ) {
+    if ( ! targetValues || targetValues.length == 0 ) {
         targetValues = allFieldValues[fieldId] ;
     }
     
