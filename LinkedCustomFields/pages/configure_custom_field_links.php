@@ -52,7 +52,8 @@
 	    if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM || $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_MULTILIST) {
 	        print_link(plugin_page('configure_custom_field_link.php&custom_field_id='.$t_custom_field), plugin_lang_get('edit'));
 	    } else {
-	        echo sprintf(plugin_lang_get('unsupported_field_type'), get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ));
+	        $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' . get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
+	        echo sprintf(plugin_lang_get('unsupported_field_type'), $t_supported_types);
 	    }
 	    echo '</td>';
 	    echo '</tr>';
