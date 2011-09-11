@@ -13,7 +13,6 @@ var linkedFieldValues = {};
 var allFieldValues = {};
 var bindings = {};
 var savedValues = {};
-var fieldProperties = {};
 <?php
 
 foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
@@ -35,8 +34,6 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
         echo 'bindings["' . $t_custom_field_id.'"] = "'. $t_linked_field_id.'";'."\n";
         echo 'allFieldValues["' .$t_custom_field_id.'"] = ' . JavascriptUtils::toJSArray( explode('|', $t_linked_field['possible_values']) ).";\n";
         echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
-        $t_is_multiple = $t_linked_field['type'] == CUSTOM_FIELD_TYPE_MULTILIST ? "true" : "false";
-        echo 'fieldProperties["' . $t_linked_field_id.'"] = { multiple : "'.$t_is_multiple.'"};'."\n";
         
         foreach ( $t_linked_values as $t_linked_value_arr ) {
             list($t_source_value, $t_target_values ) = $t_linked_value_arr;
@@ -91,14 +88,11 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
     
     var targetFieldId = bindings[fieldId];
     
-    console.info("Binding from field " + fieldId + " to field " + targetFieldId + " for value " + fieldValue);
-    
     var targetFieldRef = LinkedCustomFieldsUtil.findCustomFieldByFieldId ( targetFieldId );
     
     targetFieldRef.empty();
     for ( var i = 0 ; i < targetValues.length; i++ ) {
         var targetValue = targetValues[i];
-        console.info("Appending target value " + targetValue);
         targetFieldRef.append(jQuery('<option/>').
             attr('value', targetValue).
             text(targetValue));
@@ -109,7 +103,6 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
 
 jQuery(document).ready(function() {
     for ( var boundKey in bindings ) {
-        console.info("Bound " + boundKey +" -> " + bindings[boundKey]);
         
         var applicable = linkedFieldValues[boundKey];
         
