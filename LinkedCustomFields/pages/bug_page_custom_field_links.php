@@ -4,12 +4,7 @@ header ("Content-Type: text/javascript");
 require_once 'core.php';
 
 $t_bug_id = gpc_get_int('bug_id');
-
-echo JavascriptUtils::consoleLog('Bug id is ' . $t_bug_id);
-
 $t_project_id = bug_get_field( $t_bug_id, 'project_id' );
-
-echo JavascriptUtils::consoleLog('Project id is ' . $t_project_id);
 
 $t_all_custom_field_ids = custom_field_get_linked_ids( $t_project_id );
 
@@ -18,6 +13,7 @@ var linkedFieldValues = {};
 var allFieldValues = {};
 var bindings = {};
 var savedValues = {};
+var fieldProperties = {};
 <?php
 
 foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
@@ -33,13 +29,14 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
         // values from $t_custom_field_id trigger filter values from $t_linked_field_id 
 
         $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field_id );
-        echo JavascriptUtils::consoleLog('Found linked field with id '. $t_custom_field_id . ' , linked to ' . $t_linked_field_id);
         
         $t_linked_field = custom_field_get_definition( $t_linked_field_id );
-        echo 'savedValues["' . $t_linked_field_id .'"] = "' . string_attribute( custom_field_get_value(  $t_linked_field_id, $t_bug_id ) ) . '"'."\n";
+        echo 'savedValues["' . $t_linked_field_id .'"] = ' . JavascriptUtils::toJSArray( explode('|', custom_field_get_value(  $t_linked_field_id, $t_bug_id ) ) ).";\n";
         echo 'bindings["' . $t_custom_field_id.'"] = "'. $t_linked_field_id.'";'."\n";
         echo 'allFieldValues["' .$t_custom_field_id.'"] = ' . JavascriptUtils::toJSArray( explode('|', $t_linked_field['possible_values']) ).";\n";
         echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
+        $t_is_multiple = $t_linked_field['type'] == CUSTOM_FIELD_TYPE_MULTILIST ? "true" : "false";
+        echo 'fieldProperties["' . $t_linked_field_id.'"] = { multiple : "'.$t_is_multiple.'"};'."\n";
         
         foreach ( $t_linked_values as $t_linked_value_arr ) {
             list($t_source_value, $t_target_values ) = $t_linked_value_arr;
@@ -49,8 +46,44 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
 }
 ?>
 
+var LinkedCustomFieldsUtil = {
+    removeDuplicates : function(arr) {
+        var uniques = [];
+        for(var i=arr.length;i--;){
+            var val = arr[i];
+            if(jQuery.inArray( val, uniques )===-1){
+                uniques.unshift(val);
+            }
+        }
+        return uniques;
+    },
+    findCustomFieldByFieldId: function(fieldId) {
+    
+        var fieldRef = jQuery('[name=custom_field_' + fieldId  +']'); 
+        if ( fieldRef.length == 0 ) {
+            fieldRef = jQuery('[name=custom_field_' + fieldId  +'[]]'); 
+        }
+        
+        return fieldRef;
+    }
+};
+
 var refreshLinkedValues = function(fieldId, fieldValue) {
-    var targetValues = linkedFieldValues[fieldId][fieldValue];
+    var targetValues = [];
+    
+    if ( fieldValue instanceof Array) {
+        for ( var i = 0 ; i < fieldValue.length; i++) {
+            var singleValue = fieldValue[i];
+            var currentTargetValues = linkedFieldValues[fieldId][singleValue];
+            for ( var j = 0 ; j < currentTargetValues.length; j++ ) {
+                targetValues.push(currentTargetValues[j]);
+            }
+        }
+
+        targetValues = LinkedCustomFieldsUtil.removeDuplicates(targetValues);
+    } else {
+        targetValues = linkedFieldValues[fieldId][fieldValue];
+    }
     
     if ( ! targetValues ) {
         targetValues = allFieldValues[fieldId] ;
@@ -58,7 +91,9 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
     
     var targetFieldId = bindings[fieldId];
     
-    var targetFieldRef = jQuery('[name=custom_field_' + targetFieldId  +']'); 
+    console.info("Binding from field " + fieldId + " to field " + targetFieldId + " for value " + fieldValue);
+    
+    var targetFieldRef = LinkedCustomFieldsUtil.findCustomFieldByFieldId ( targetFieldId );
     
     targetFieldRef.empty();
     for ( var i = 0 ; i < targetValues.length; i++ ) {
@@ -70,22 +105,21 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
     }
     
     targetFieldRef.val(savedValues[targetFieldId]);
-    
-    console.info("Legal values should be " + fieldValue + " -> " + targetValues);
 };
 
 jQuery(document).ready(function() {
-    for ( boundKey in bindings ) {
+    for ( var boundKey in bindings ) {
         console.info("Bound " + boundKey +" -> " + bindings[boundKey]);
         
         var applicable = linkedFieldValues[boundKey];
         
-        var customFieldRef = jQuery('[name=custom_field_'+boundKey+']'); 
+        var customFieldRef = LinkedCustomFieldsUtil.findCustomFieldByFieldId( boundKey );
+        customFieldRef.data('fieldId', boundKey); 
         
         refreshLinkedValues(boundKey, customFieldRef.val());
         
         customFieldRef.change(function() {
-            refreshLinkedValues(boundKey, jQuery(this).val());
+            refreshLinkedValues(jQuery(this).data('fieldId'), jQuery(this).val());
         });
     }
 });

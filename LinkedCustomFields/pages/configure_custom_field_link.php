@@ -30,7 +30,7 @@
     foreach ( $t_custom_fields as $t_custom_field ) {
         
         $t_custom_field_def = custom_field_get_definition( $t_custom_field );
-        if ( $t_custom_field_def['type'] != CUSTOM_FIELD_TYPE_ENUM ) {
+        if ( $t_custom_field_def['type'] != CUSTOM_FIELD_TYPE_ENUM && $t_custom_field_def['type'] != CUSTOM_FIELD_TYPE_MULTILIST ) {
             continue;
         }
         
