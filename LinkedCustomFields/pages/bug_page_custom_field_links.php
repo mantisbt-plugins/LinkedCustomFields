@@ -4,7 +4,16 @@ header ("Content-Type: text/javascript");
 require_once 'core.php';
 
 $t_bug_id = gpc_get_int('bug_id');
-$t_project_id = bug_get_field( $t_bug_id, 'project_id' );
+$t_master_bug_id = gpc_get_int('m_id', 0);
+if ( $t_bug_id == 0 ) {
+    if ( $t_master_bug_id != 0 ) {
+        $t_project_id = bug_get_field( $t_master_bug_id, 'project_id' );
+    } else {
+        $t_project_id = helper_get_current_project();
+    }    
+} else {
+    $t_project_id = bug_get_field( $t_bug_id, 'project_id' );
+}
 
 $t_all_custom_field_ids = custom_field_get_linked_ids( $t_project_id );
 
@@ -17,7 +26,13 @@ var savedValues = {};
 
 foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
     
-    if ( ! ( custom_field_has_write_access($t_custom_field_id, $t_bug_id) ) ) {
+    if ( $t_bug_id != 0 ) {
+        $t_has_write_access = custom_field_has_write_access( $t_custom_field_id, $t_bug_id );     
+    } else {
+        $t_has_write_access = custom_field_has_write_access_to_project( $t_custom_field_id, $t_project_id );
+    }
+    
+    if ( ! $t_has_write_access ) {
         continue;
     }
     
@@ -30,7 +45,11 @@ foreach ( $t_all_custom_field_ids as $t_custom_field_id ) {
         $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field_id );
         
         $t_linked_field = custom_field_get_definition( $t_linked_field_id );
-        echo 'savedValues["' . $t_linked_field_id .'"] = ' . JavascriptUtils::toJSArray( explode('|', custom_field_get_value(  $t_linked_field_id, $t_bug_id ) ) ).";\n";
+
+        $t_saved_values_source_id = $t_master_bug_id != 0 ? $t_master_bug_id : $t_bug_id;
+        $t_saved_values = $t_saved_values_source_id != 0 ? explode('|', custom_field_get_value(  $t_linked_field_id, $t_saved_values_source_id ) ) : array();
+        
+        echo 'savedValues["' . $t_linked_field_id .'"] = ' . JavascriptUtils::toJSArray( $t_saved_values ).";\n";
         echo 'bindings["' . $t_custom_field_id.'"] = "'. $t_linked_field_id.'";'."\n";
         echo 'allFieldValues["' .$t_custom_field_id.'"] = ' . JavascriptUtils::toJSArray( explode('|', $t_linked_field['possible_values']) ).";\n";
         echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
