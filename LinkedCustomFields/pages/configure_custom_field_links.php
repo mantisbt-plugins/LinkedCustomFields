@@ -24,6 +24,9 @@
 	html_page_top( plugin_lang_get( 'configure_custom_field_links' ) );
 
 	$t_custom_fields = custom_field_get_ids();
+	$t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' . 
+						 get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
+	
 ?>
     <br />
     <table class="width50" align="center">
@@ -31,7 +34,7 @@
             <tr class="row-category">
                 <th><?php echo plugin_lang_get('custom_field') ?></th>
                 <th><?php echo plugin_lang_get('linked_to') ?></th>
-                <th>&nbsp;</th>
+                <th><?php echo sprintf(plugin_lang_get('unsupported_field_type'), $t_supported_types); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -39,24 +42,23 @@
 <?php 
 	foreach ( $t_custom_fields as $t_custom_field ) {
 	    $t_custom_field_def = custom_field_get_definition( $t_custom_field );
-	    echo '<tr '. helper_alternate_class() .'>';
-	    echo '<td>'. string_display( $t_custom_field_def['name'] ).'</td>';
-	    $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field );
-	    if ( $t_linked_field_id ) {
-            $t_linked_field = custom_field_get_definition( $t_linked_field_id );
-            echo '<td>' . $t_linked_field['name'] .'</td>';	        
-	    } else {
-	        echo '<td> None </td>';
-	    }
-	    echo '<td>';
-	    if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM || $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_MULTILIST) {
+	    if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM || 
+	         $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_MULTILIST) 
+	    {
+		    echo '<tr '. helper_alternate_class() .'>';
+		    echo '<td>'. string_display( $t_custom_field_def['name'] ).'</td>';
+		    $t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field );
+		    if ( $t_linked_field_id ) {
+	            $t_linked_field = custom_field_get_definition( $t_linked_field_id );
+	            echo '<td>' . $t_linked_field['name'] .'</td>';	        
+		    } else {
+		        echo '<td> None </td>';
+		    }
+		    echo '<td>';
 	        print_link(plugin_page('configure_custom_field_link.php&custom_field_id='.$t_custom_field), plugin_lang_get('edit'));
-	    } else {
-	        $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' . get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
-	        echo sprintf(plugin_lang_get('unsupported_field_type'), $t_supported_types);
-	    }
-	    echo '</td>';
-	    echo '</tr>';
+		    echo '</td>';
+		    echo '</tr>';
+	    } 
 	}
 ?>
         </tbody>
