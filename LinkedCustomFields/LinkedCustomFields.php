@@ -24,7 +24,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
         $this->version = "1.0";
         $this->requires = array(
 			"MantisCore" => "1.2.6",
-			"jQuery" => "1.3"
+			"jQuery" => "1.8"
         );
 
         $this->author = "Robert Munteanu";
