@@ -1,0 +1,30 @@
+﻿<?php
+
+# Copyright (c) 2011 Robert Munteanu (robert@lmn.ro)
+
+# Linked custom fields plugin for MantisBT is free software: 
+# you can redistribute it and/or modify it under the terms of the GNU
+# General Public License as published by the Free Software Foundation, 
+# either version 2 of the License, or (at your option) any later version.
+#
+# Linked custom fields plugin for MantisBT is distributed in the hope 
+# that it will be useful, but WITHOUT ANY WARRANTY; without even the 
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with Linked custom fields plugin for MantisBT.  
+# If not, see <http://www.gnu.org/licenses/>.
+
+$s_plugin_LinkedCustomFields_ = '';
+$s_plugin_LinkedCustomFields_title = 'Liaison entre champs personnalisés';
+$s_plugin_LinkedCustomFields_description = 'Apporte la possibilité de lier les champs personnalisés ; liaison entre listes déroulantes';
+$s_plugin_LinkedCustomFields_configure_custom_field_links = 'Gérer les liens entre champs personnalisés';
+$s_plugin_LinkedCustomFields_custom_field = 'Champs personnalisés';
+$s_plugin_LinkedCustomFields_edit = 'Modifier';
+$s_plugin_LinkedCustomFields_linked_to = 'Lier à';
+$s_plugin_LinkedCustomFields_unsupported_field_type = 'Ne supporte que les champs personnalisés du type : %s';
+$s_plugin_LinkedCustomFields_source_field_value = 'Champ personnalisé primaire';
+$s_plugin_LinkedCustomFields_target_field_values = 'Champ personnalisé secondaire (lié au primaire)';
+$s_plugin_LinkedCustomFields_submit = 'Valider';
+$s_plugin_LinkedCustomFields_target_field_already_linked = 'Le champ personnalisé secondaire est déjà lié à un autre champ personnalisé. La double liaison n\'est pas supportée.';
