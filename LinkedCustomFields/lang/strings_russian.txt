@@ -29,3 +29,4 @@ $s_plugin_LinkedCustomFields_target_field_values = 'Целевое значен�
 $s_plugin_LinkedCustomFields_submit = 'Применить';
 $s_plugin_LinkedCustomFields_target_field_already_linked = 'Целевое поле уже связано с другим настраиваемым полем. Двойная связь не поддерживается.';
 
+
