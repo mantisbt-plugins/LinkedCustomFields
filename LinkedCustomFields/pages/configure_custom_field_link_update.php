@@ -26,6 +26,10 @@
 	$f_source_field_id =  gpc_get_int('custom_field_id');
 	$t_source_field = custom_field_get_definition( $f_source_field_id );
 	$t_source_field_values = explode ( '|', $t_source_field['possible_values']);
+	$t_adapted_source_field_values = array();
+	foreach ($t_source_field_values as $value) {
+		$t_adapted_source_field_values[str_replace(' ', '-', $value)] = $value;
+	}
 	
 	$f_target_field_id = gpc_get_int('target_custom_field');
 	
@@ -34,7 +38,7 @@
 	    if ( strpos($f_post_key, 'custom_field_linked_values_') === 0 ) {
 	        
 	        $t_source_value_index = substr( $f_post_key, strlen ('custom_field_linked_values_') );
-	        $t_source_value = $t_source_field_values[ $t_source_value_index ];
+	        $t_source_value = $t_adapted_source_field_values[ $t_source_value_index ];
 	        $t_linked_value = gpc_get( $f_post_key );
             $t_value_mappings[$t_source_value] = $t_linked_value;
 	    }

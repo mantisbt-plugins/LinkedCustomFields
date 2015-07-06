@@ -50,7 +50,7 @@ class LinkedCustomFieldsDao {
     static function getLinkedValuesMap( $p_source_field_id ) {
         
         $t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table('data') . 
-                    " WHERE custom_field_id=".db_param() ." ORDER BY custom_field_value_order" ;
+                    " WHERE custom_field_id=".db_param() ." ORDER BY custom_field_value" ;
         $t_result = db_query_bound( $t_query, array ( $p_source_field_id ) );
         if ( 0 == db_num_rows ( $t_result ) ) {
             return array();
@@ -63,7 +63,7 @@ class LinkedCustomFieldsDao {
             $t_source_value = $t_array['custom_field_value'];
             $t_target_values_imploded = $t_array['target_field_values'];
             
-            $t_return[] = array($t_source_value, explode( '|', $t_target_values_imploded ));
+            $t_return[$t_source_value] = explode( '|', $t_target_values_imploded );
         }
         
         return $t_return;
