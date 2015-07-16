@@ -23,8 +23,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 
         $this->version = "1.0";
         $this->requires = array(
-			"MantisCore" => "1.2.6",
-			"jQuery" => "1.8"
+ 			"MantisCore" => "1.2.6",
+ 			"jQuery" => "1.8"
         );
 
         $this->author = "Robert Munteanu";
@@ -70,8 +70,11 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
                     custom_field_value C(255) NOTNULL DEFAULT \" '' \",
                     target_field_id    I NOTNULL,
                     target_field_values    C(255) NOTNULL DEFAULT \" '' \"
-                ")
-            )
+                "),
+            ),
+        	array( 'AlterColumnSQL',
+        		array( plugin_table( 'data' ), " custom_field_value XL, target_field_values XL")
+        	)
         );
     }
 }
