@@ -23,7 +23,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 
         $this->version = "2.0.0-dev";
         $this->requires = array(
- 			"MantisCore" => "1.2.6, <2.9.0",
+ 			"MantisCore" => "2.0.0",
         );
 
         $this->author = "Robert Munteanu";
