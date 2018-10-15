@@ -46,7 +46,7 @@ foreach ( $t_custom_fields as $t_custom_field ) {
 	if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM ||
 		 $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_MULTILIST)
 	{
-		echo '<td>'. string_display( $t_custom_field_def['name'] ).'</td>';
+		echo '<td>'. string_display_line( $t_custom_field_def['name'] ).'</td>';
 		$t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field );
 		if ( $t_linked_field_id ) {
 			$t_linked_field = custom_field_get_definition( $t_linked_field_id );
@@ -55,7 +55,10 @@ foreach ( $t_custom_fields as $t_custom_field ) {
 			echo '<td> None </td>';
 	}
 		echo '<td>';
-		print_link(plugin_page('configure_custom_field_link.php&custom_field_id='.$t_custom_field), plugin_lang_get('edit'));
+		print_small_button(
+			plugin_page('configure_custom_field_link' ) . "&custom_field_id=$t_custom_field",
+			plugin_lang_get('edit')
+		);
 		echo '</td>';
 		echo '</tr>';
 	}
