@@ -18,8 +18,14 @@
 	require_once( 'core.php' );
 
 	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
-	
-	html_page_top( plugin_lang_get( 'configure_custom_field_links' ) );
+
+    html_robots_noindex();
+    header("Content-Security-Policy: default-src 'self'; frame-ancestors 'none'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' img-src 'self'");
+
+    layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
+
+    layout_page_begin(__FILE__);
+    print_manage_menu( 'manage_overview_page.php' );
 
 	$f_custom_field = custom_field_get_definition( gpc_get_int('custom_field_id') );
 	$t_linked_custom_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $f_custom_field['id'] );
@@ -44,60 +50,62 @@
 <?php echo form_security_field( 'configure_custom_field_link' ) ?>
 <br />
 <input type="hidden" name="custom_field_id" id="custom_field_id" value="<?php echo gpc_get_int('custom_field_id')?>" />
-<table class="width50" align="center">
-    <tbody>
-        <tr <?php echo helper_alternate_class() ?>>
-            <td><?php echo plugin_lang_get('custom_field') ?></td>
-            <td><?php echo $f_custom_field['name'] ?></td>
-        </tr>
-        <tr <?php echo helper_alternate_class() ?>>
-            <td><?php echo plugin_lang_get('linked_to') ?></td>
-            <td>
-                <select id="target_custom_field" name="target_custom_field">
-                    <option value="">None</option>
-                <?php
-                    foreach  ( $t_target_candidates as $t_target_candidate ) {
-                        
-                        if ( $t_target_candidate['id'] == $f_custom_field['id'] ) {
-                            continue;
-                        }
-                        
-                        $t_selected = $t_linked_custom_field_id == $t_target_candidate['id'] ? ' selected="selected"' : "";
-                        
-                        echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
-                    } 
-                ?>
-                </select>            
-            </td>
-    </tbody>
-</table>
-
-<br/>
-
-<table id="link_area" class="width50" align="center">
-    <thead>
-        <tr class="category">
-            <th><?php echo plugin_lang_get('source_field_value')?></th>
-            <th><?php echo plugin_lang_get('target_field_values')?></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_idx =>  $t_possible_value ) { ?>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered table-condensed">
+        <tbody>
             <tr <?php echo helper_alternate_class() ?>>
-                <td> <?php echo $t_possible_value ?></td>
-                <td><select id="custom_field_linked_values_<?php echo $t_idx?>" name="custom_field_linked_values_<?php echo $t_idx?>[]" multiple="multiple"></select></td>
+                <td><?php echo plugin_lang_get('custom_field') ?></td>
+                <td><?php echo $f_custom_field['name'] ?></td>
             </tr>
-        <?php } ?>
-            <tr>
-            	<td>
-            		&#160;
-            	</td>
-            	<td>
-            		<input type="submit" class="button" value="<?php echo plugin_lang_get( 'submit' ) ?>" />
-            	</td>
-            </tr>
+            <tr <?php echo helper_alternate_class() ?>>
+                <td><?php echo plugin_lang_get('linked_to') ?></td>
+                <td>
+                    <select id="target_custom_field" name="target_custom_field">
+                        <option value="">None</option>
+                    <?php
+                        foreach  ( $t_target_candidates as $t_target_candidate ) {
+
+                            if ( $t_target_candidate['id'] == $f_custom_field['id'] ) {
+                                continue;
+                            }
+
+                            $t_selected = $t_linked_custom_field_id == $t_target_candidate['id'] ? ' selected="selected"' : "";
+
+                            echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
+                        }
+                    ?>
+                    </select>
+                </td>
         </tbody>
-</table>
+    </table>
+
+    <br/>
+
+    <table id="link_area" class="width50" align="center">
+        <thead>
+            <tr class="category">
+                <th><?php echo plugin_lang_get('source_field_value')?></th>
+                <th><?php echo plugin_lang_get('target_field_values')?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_idx =>  $t_possible_value ) { ?>
+                <tr <?php echo helper_alternate_class() ?>>
+                    <td> <?php echo $t_possible_value ?></td>
+                    <td><select id="custom_field_linked_values_<?php echo $t_idx?>" name="custom_field_linked_values_<?php echo $t_idx?>[]" multiple="multiple"></select></td>
+                </tr>
+            <?php } ?>
+                <tr>
+                    <td>
+                        &#160;
+                    </td>
+                    <td>
+                        <input type="submit" class="button" value="<?php echo plugin_lang_get( 'submit' ) ?>" />
+                    </td>
+                </tr>
+            </tbody>
+    </table>
+    </div>
 </form>
 <script type="text/javascript">
 var targetValues = {};
@@ -147,6 +155,6 @@ jQuery(document).ready(function() {
     ?>
 });
 </script>
-<?php 
-	html_page_bottom();
+<?php
+layout_page_end();
 ?>

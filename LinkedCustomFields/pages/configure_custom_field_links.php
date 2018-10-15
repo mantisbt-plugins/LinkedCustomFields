@@ -14,14 +14,20 @@
 # You should have received a copy of the GNU General Public License
 # along with Linked custom fields plugin for MantisBT.
 # If not, see <http://www.gnu.org/licenses/>.
- 
+//error_reporting(E_ALL);
+//ini_set('display_errors', 'On');
 	require_once( 'core.php' );
 
 	auth_reauthenticate();
 	
 	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
-	
-	html_page_top( plugin_lang_get( 'configure_custom_field_links' ) );
+
+    html_robots_noindex();
+
+    layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
+
+    layout_page_begin(__FILE__);
+    print_manage_menu( 'manage_overview_page.php' );
 
 	$t_custom_fields = custom_field_get_ids();
 	$t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' . 
@@ -29,7 +35,8 @@
 	
 ?>
     <br />
-    <table class="width50" align="center">
+    <div class="table-responsive">
+    <table class="table table-striped table-bordered table-condensed">
         <thead>
             <tr class="row-category">
                 <th><?php echo plugin_lang_get('custom_field') ?></th>
@@ -63,7 +70,8 @@
 ?>
         </tbody>
     </table>
+    </div> 
 <?php
-	
-	html_page_bottom();
+
+    layout_page_end();
 ?>
