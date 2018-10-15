@@ -21,7 +21,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
         $this->name = plugin_lang_get("title");
         $this->description = plugin_lang_get("description");
 
-        $this->version = "2.0";
+        $this->version = "2.0.0-dev";
         $this->requires = array(
  			"MantisCore" => "1.2.6, <2.9.0",
         );
