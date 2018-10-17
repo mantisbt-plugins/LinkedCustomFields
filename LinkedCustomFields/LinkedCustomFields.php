@@ -108,12 +108,12 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 		# Set the reference Bug Id for placeholders replacements
 		if( isset( $args['field_id'] ) ) {
 			$t_field_id = (int)$args['field_id'];
-		} else {
-			$t_field_id = 0;
-		}
 
-		# Retrieve Custom Field definition
-		$t_custom_field_def = custom_field_cache_row( $t_field_id, false );
+			# Retrieve Custom Field definition
+			$t_custom_field_def = custom_field_cache_row( $t_field_id, false );
+		} else {
+			$t_custom_field_def = false;
+		}
 
 		# Make sure Custom Field exists and its type is supported
 		if( !$t_custom_field_def ) {
