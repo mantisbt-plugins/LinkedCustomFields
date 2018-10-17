@@ -47,11 +47,12 @@
 <input type="hidden" name="custom_field_id" id="custom_field_id" value="<?php echo gpc_get_int('custom_field_id')?>" />
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-condensed">
-        <tbody>
-            <tr>
-                <td><?php echo plugin_lang_get('custom_field') ?></td>
-                <td><?php echo $f_custom_field['name'] ?></td>
-            </tr>
+            <thead>
+                <tr>
+                    <th width="30%"><?php echo plugin_lang_get('custom_field') ?></th>
+                    <th><?php echo $f_custom_field['name'] ?></th>
+                </tr>
+            <tbody>
             <tr>
                 <td><?php echo plugin_lang_get('linked_to') ?></td>
                 <td>
@@ -75,10 +76,15 @@
     </table>
 
     <br/>
-
-    <table id="link_area" class="width50" align="center">
+<?php
+    $t_classes = 'table table-striped table-bordered table-condensed';
+    if( $t_linked_custom_field_id === null ) {
+        $t_classes .= ' hidden';
+    }
+?>
+    <table id="link_area" class="<?php echo $t_classes ?>" align="center">
         <thead>
-            <tr class="category">
+            <tr>
                 <th><?php echo plugin_lang_get('source_field_value')?></th>
                 <th><?php echo plugin_lang_get('target_field_values')?></th>
             </tr>
@@ -87,7 +93,13 @@
             <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_idx =>  $t_possible_value ) { ?>
                 <tr>
                     <td> <?php echo $t_possible_value ?></td>
-                    <td><select id="custom_field_linked_values_<?php echo $t_idx?>" name="custom_field_linked_values_<?php echo $t_idx?>[]" multiple="multiple"></select></td>
+                    <td>
+                        <select id="custom_field_linked_values_<?php echo $t_idx?>"
+                                name="custom_field_linked_values_<?php echo $t_idx?>[]"
+                                class="lcf_target"
+                                multiple="multiple">
+                        </select>
+                    </td>
                 </tr>
             <?php } ?>
                 <tr>
@@ -95,7 +107,7 @@
                         &#160;
                     </td>
                     <td>
-                        <input type="submit" class="button" value="<?php echo plugin_lang_get( 'submit' ) ?>" />
+                        <input type="submit" class="button lcf_target" value="<?php echo plugin_lang_get( 'submit' ) ?>" />
                     </td>
                 </tr>
             </tbody>
