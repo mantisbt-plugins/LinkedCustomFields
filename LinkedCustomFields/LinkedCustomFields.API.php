@@ -14,7 +14,7 @@ class LinkedCustomFieldsDao {
         $t_data_table = plugin_table('data');
         $t_query = "DELETE FROM " . $t_data_table . " WHERE custom_field_id = " . db_param();
         
-        db_query_bound( $t_query, array( $p_source_field_id )) ;
+        db_query( $t_query, array( $p_source_field_id )) ;
 
         $t_insert_query = "INSERT INTO " . $t_data_table . "
             (custom_field_id, custom_field_value_order, custom_field_value, target_field_id, target_field_values)
@@ -23,7 +23,7 @@ class LinkedCustomFieldsDao {
         $t_idx = 0 ;
         
         foreach ( $p_value_mappings as $t_key => $t_value ) {
-            db_query_bound($t_insert_query, array( $p_source_field_id, $t_idx, $t_key, $p_target_field_id, implode('|', $t_value)));
+            db_query($t_insert_query, array( $p_source_field_id, $t_idx, $t_key, $p_target_field_id, implode('|', $t_value)));
             $t_idx++;
         }
     }
@@ -37,7 +37,7 @@ class LinkedCustomFieldsDao {
         
         $t_query = "SELECT target_field_id FROM " . plugin_table('data') . " WHERE custom_field_id = " . db_param();
         
-        $t_result = db_query_bound( $t_query, array ( $p_source_field_id ) );
+        $t_result = db_query( $t_query, array ( $p_source_field_id ) );
         
         if( 0 == db_num_rows( $t_result ) ) {
             return null;
@@ -51,13 +51,13 @@ class LinkedCustomFieldsDao {
         
         $t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table('data') . 
                     " WHERE custom_field_id=".db_param() ." ORDER BY custom_field_value_order" ;
-        $t_result = db_query_bound( $t_query, array ( $p_source_field_id ) );
+        $t_result = db_query( $t_query, array ( $p_source_field_id ) );
         if ( 0 == db_num_rows ( $t_result ) ) {
             return array();
         }
         
         $t_return = array();
-        
+
         for ( $i = 0 ; $i < db_num_rows( $t_result); $i++ ) {
             $t_array = db_fetch_array( $t_result );            
             $t_source_value = $t_array['custom_field_value'];
