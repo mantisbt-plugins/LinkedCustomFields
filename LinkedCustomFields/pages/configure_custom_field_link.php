@@ -15,13 +15,9 @@
 # along with Linked custom fields plugin for MantisBT.
 # If not, see <http://www.gnu.org/licenses/>.
 
-	require_once( 'core.php' );
-
 	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 
     html_robots_noindex();
-    header("Content-Security-Policy: default-src 'self'; frame-ancestors 'none'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval' img-src 'self'");
-
     layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
 
     layout_page_begin(__FILE__);
@@ -45,7 +41,6 @@
     
 ?>
 
-
 <form method="post" action="<?php echo plugin_page('configure_custom_field_link_update.php') ?>">
 <?php echo form_security_field( 'configure_custom_field_link' ) ?>
 <br />
@@ -53,11 +48,11 @@
     <div class="table-responsive">
         <table class="table table-striped table-bordered table-condensed">
         <tbody>
-            <tr <?php echo helper_alternate_class() ?>>
+            <tr>
                 <td><?php echo plugin_lang_get('custom_field') ?></td>
                 <td><?php echo $f_custom_field['name'] ?></td>
             </tr>
-            <tr <?php echo helper_alternate_class() ?>>
+            <tr>
                 <td><?php echo plugin_lang_get('linked_to') ?></td>
                 <td>
                     <select id="target_custom_field" name="target_custom_field">
@@ -90,7 +85,7 @@
         </thead>
         <tbody>
             <?php foreach ( explode('|', $f_custom_field['possible_values'] ) as $t_idx =>  $t_possible_value ) { ?>
-                <tr <?php echo helper_alternate_class() ?>>
+                <tr>
                     <td> <?php echo $t_possible_value ?></td>
                     <td><select id="custom_field_linked_values_<?php echo $t_idx?>" name="custom_field_linked_values_<?php echo $t_idx?>[]" multiple="multiple"></select></td>
                 </tr>
@@ -157,4 +152,3 @@ jQuery(document).ready(function() {
 </script>
 <?php
 layout_page_end();
-?>
