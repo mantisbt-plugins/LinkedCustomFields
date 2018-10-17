@@ -89,6 +89,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 			plugin_route_group(),
 			function() use ( $t_app, $t_plugin ) {
 				$t_app->get( '/values/{field_id}', [$t_plugin, 'route_values'] );
+				$t_app->get( '/mapping/{field_id}', [$t_plugin, 'route_mapping'] );
 			}
 		);
 	}
@@ -139,6 +140,41 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 			->withJson(
 				explode( '|', $t_custom_field_def['possible_values'] )
 			);
+	}
+
+	/**
+	 * RESTful route for Custom Fields link mappings.
+	 *
+	 * Returned JSON structure:
+	 * - {array}      List of CF link mappings, with structure
+     *   - {array}    CF mapping
+     *     - {string}  Source CF value
+     *     - {array}   Allowed target CF values
+	 *
+	 * @param Slim\Http\Request $request
+	 * @param Slim\Http\Response $response
+	 * @param array $args [bug_id = Bug Id for patterns replacement]
+	 * @return Slim\Http\Response
+	 */
+	public function route_mapping( $request, $response, $args ) {
+		# Set the reference Bug Id for placeholders replacements
+		if( isset( $args['field_id'] ) ) {
+            $t_field_id = (int)$args['field_id'];
+
+            plugin_push_current( $this->basename );
+            $t_map = LinkedCustomFieldsDao::getLinkedValuesMap( $t_field_id );
+            plugin_pop_current();
+        } else {
+            return $response->withStatus(
+                HTTP_STATUS_BAD_REQUEST,
+                "Invalid Custom Field Id"
+            );
+        }
+
+		# Return possible values
+		return $response
+			->withStatus( HTTP_STATUS_SUCCESS )
+			->withJson( $t_map );
 	}
 
 }
