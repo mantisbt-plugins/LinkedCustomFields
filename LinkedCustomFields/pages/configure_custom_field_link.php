@@ -19,7 +19,9 @@
 
     html_robots_noindex();
     layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
-
+?>
+    <script type="text/javascript" src="<?php echo plugin_file("config.js"); ?>"></script>
+<?php
     layout_page_begin(__FILE__);
     print_manage_menu( 'manage_overview_page.php' );
 
@@ -71,6 +73,7 @@
                         }
                     ?>
                     </select>
+                    <span id="loading"><?php echo plugin_lang_get('loading'); ?></span>
                 </td>
         </tbody>
     </table>
@@ -114,6 +117,8 @@
     </table>
     </div>
 </form>
+<?php
+/*
 <script type="text/javascript">
 var targetValues = {};
 <?php 
@@ -162,5 +167,5 @@ jQuery(document).ready(function() {
     ?>
 });
 </script>
-<?php
+*/
 layout_page_end();

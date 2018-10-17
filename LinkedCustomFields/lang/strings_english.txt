@@ -23,6 +23,7 @@ $s_plugin_LinkedCustomFields_configure_custom_field_links = 'Configure custom fi
 $s_plugin_LinkedCustomFields_custom_field = 'Custom field';
 $s_plugin_LinkedCustomFields_edit = 'Edit';
 $s_plugin_LinkedCustomFields_linked_to = 'Linked to';
+$s_plugin_LinkedCustomFields_loading = 'Loading Custom Field data, please wait...';
 $s_plugin_LinkedCustomFields_unsupported_field_type = 'Only supported for fields of type %s';
 $s_plugin_LinkedCustomFields_source_field_value = 'Source field value';
 $s_plugin_LinkedCustomFields_target_field_values = 'Target field values';
