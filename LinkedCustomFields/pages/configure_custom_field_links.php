@@ -45,6 +45,10 @@ $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_EN
 
         <div class="widget-body">
             <div class="widget-main no-padding">
+                <div class="widget-toolbox padding-8 clearfix">
+                    <?php echo sprintf(plugin_lang_get( 'unsupported_field_type' ), $t_supported_types); ?>
+                </div>
+
                 <div class="table-responsive">
 
                     <table class="table table-striped table-bordered table-condensed">
@@ -52,7 +56,7 @@ $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_EN
                             <tr class="row-category">
                                 <th><?php echo plugin_lang_get('custom_field') ?></th>
                                 <th><?php echo plugin_lang_get('linked_to') ?></th>
-                                <th><?php echo sprintf(plugin_lang_get('unsupported_field_type'), $t_supported_types); ?></th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
