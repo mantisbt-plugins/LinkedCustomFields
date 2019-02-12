@@ -5,6 +5,8 @@ class LinkedCustomFieldsDao {
 	/**
 	 * Replaces existing custom field link values with the current ones.
 	 *
+	 * Note that the link will be removed if there are no mappings defined.
+	 *
 	 * @param int $p_source_field_id
 	 * @param int $p_target_field_id
 	 * @param array $p_value_mappings map of source field value to target field value(s)
@@ -29,6 +31,7 @@ class LinkedCustomFieldsDao {
 	}
 
 	/**
+	 * Retrieve the Target custom field's Id
 	 *
 	 * @param int $p_source_field_id
 	 * @return NULL|int the target field id or null if no link exists
@@ -47,9 +50,15 @@ class LinkedCustomFieldsDao {
 		return $t_array['target_field_id'];
 	}
 
+	/**
+	 * Retrieve the values mappings between the source and target fields
+	 *
+	 * @param int $p_source_field_id
+	 * @return array
+	 */
 	static function getLinkedValuesMap( $p_source_field_id ) {
 
-		$t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table('data') .
+		$t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table( 'data' ) .
 					" WHERE custom_field_id=".db_param() ." ORDER BY custom_field_value_order" ;
 		$t_result = db_query( $t_query, array ( $p_source_field_id ) );
 		if ( 0 == db_num_rows ( $t_result ) ) {
