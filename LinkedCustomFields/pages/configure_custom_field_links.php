@@ -28,7 +28,7 @@ print_manage_menu( 'configure_custom_field_links' );
 $t_custom_fields = custom_field_get_ids();
 $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' .
                      get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
-	
+
 ?>
 
 <div class="col-md-12 col-xs-12">
@@ -54,14 +54,14 @@ $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_EN
                     <table class="table table-striped table-bordered table-condensed">
                         <thead>
                             <tr class="row-category">
-                                <th><?php echo plugin_lang_get('custom_field') ?></th>
-                                <th><?php echo plugin_lang_get('linked_to') ?></th>
+                                <th><?php echo plugin_lang_get( 'custom_field' ) ?></th>
+                                <th><?php echo plugin_lang_get( 'linked_to' ) ?></th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
 
-<?php 
+<?php
 foreach ( $t_custom_fields as $t_custom_field ) {
 	$t_custom_field_def = custom_field_get_definition( $t_custom_field );
 	if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM ||

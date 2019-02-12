@@ -18,9 +18,9 @@
 	access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 
     html_robots_noindex();
-    layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
+    layout_page_header( plugin_lang_get( 'configure_custom_field_links' ) );
 ?>
-    <script type="text/javascript" src="<?php echo plugin_file("config.js"); ?>"></script>
+    <script type="text/javascript" src="<?php echo plugin_file( 'config.js' ); ?>"></script>
 <?php
     layout_page_begin(__FILE__);
     print_manage_menu( 'manage_overview_page.php' );
