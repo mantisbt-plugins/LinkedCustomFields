@@ -17,6 +17,11 @@
 
 class LinkedCustomFieldsPlugin extends MantisPlugin {
 
+	/**
+	 * Error strings
+	 */
+	const ERROR_ALREADY_LINKED = 'error_already_linked';
+
 	public function register() {
 		$this->name = plugin_lang_get("title");
 		$this->description = plugin_lang_get("description");
@@ -36,6 +41,12 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 			'EVENT_MENU_MANAGE' => 'manage_custom_field_links',
 			'EVENT_LAYOUT_RESOURCES' => 'resources',
 			'EVENT_REST_API_ROUTES' => 'routes',
+		);
+	}
+
+	function errors() {
+		return array(
+			self::ERROR_ALREADY_LINKED => plugin_lang_get( self::ERROR_ALREADY_LINKED ),
 		);
 	}
 

@@ -43,8 +43,7 @@ foreach( $_POST as $f_post_key => $f_post_value ) {
 form_security_purge( 'configure_custom_field_link' );
 
 if( LinkedCustomFieldsDao::getLinkedFieldId( $f_target_field_id ) ) {
-    // plugin_get_current('target_field_already_linked')
-    trigger_error( ERROR_GENERIC , ERROR );
+    plugin_error( LinkedCustomFieldsPlugin::ERROR_ALREADY_LINKED, ERROR );
 } else {
     LinkedCustomFieldsDao::replaceValues( $f_source_field_id, $f_target_field_id , $t_value_mappings );
     header("Location: " . plugin_page( 'configure_links.php' ) );

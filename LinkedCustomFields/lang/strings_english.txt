@@ -30,5 +30,6 @@ $s_plugin_LinkedCustomFields_unsupported_field_type = 'Only supported for fields
 $s_plugin_LinkedCustomFields_source_field_value = 'Source field value';
 $s_plugin_LinkedCustomFields_target_field_values = 'Target field values';
 $s_plugin_LinkedCustomFields_submit = 'Submit';
-$s_plugin_LinkedCustomFields_target_field_already_linked = 'The target field is already linked to another custom field. Double-linking is not supported.';
+
+$s_plugin_LinkedCustomFields_error_already_linked = 'The target field is already linked to another custom field. Multi-level linking is not supported.';
 

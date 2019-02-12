@@ -27,6 +27,7 @@ $s_plugin_LinkedCustomFields_unsupported_field_type = 'Поддерживают�
 $s_plugin_LinkedCustomFields_source_field_value = 'Исходное значение поля';
 $s_plugin_LinkedCustomFields_target_field_values = 'Целевое значение поля';
 $s_plugin_LinkedCustomFields_submit = 'Применить';
-$s_plugin_LinkedCustomFields_target_field_already_linked = 'Целевое поле уже связано с другим настраиваемым полем. Двойная связь не поддерживается.';
+
+$s_plugin_LinkedCustomFields_error_already_linked = 'Целевое поле уже связано с другим настраиваемым полем. Двойная связь не поддерживается.';
 
 

@@ -27,4 +27,5 @@ $s_plugin_LinkedCustomFields_unsupported_field_type = 'Ne supporte que les champ
 $s_plugin_LinkedCustomFields_source_field_value = 'Champ personnalisé primaire';
 $s_plugin_LinkedCustomFields_target_field_values = 'Champ personnalisé secondaire (lié au primaire)';
 $s_plugin_LinkedCustomFields_submit = 'Valider';
-$s_plugin_LinkedCustomFields_target_field_already_linked = 'Le champ personnalisé secondaire est déjà lié à un autre champ personnalisé. La double liaison n\'est pas supportée.';
+
+$s_plugin_LinkedCustomFields_error_already_linked = 'Le champ personnalisé secondaire est déjà lié à un autre champ personnalisé. Les liaisons multi-niveaux e sont pas supportées.';
