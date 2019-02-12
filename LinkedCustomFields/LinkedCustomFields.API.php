@@ -54,7 +54,7 @@ class LinkedCustomFieldsDao {
 	 * Retrieve the values mappings between the source and target fields
 	 *
 	 * @param int $p_source_field_id
-	 * @return array
+	 * @return array Structure of each row: SourceCF value => [TargetCF values]
 	 */
 	static function getLinkedValuesMap( $p_source_field_id ) {
 
@@ -65,17 +65,14 @@ class LinkedCustomFieldsDao {
 			return array();
 		}
 
-		$t_return = array();
+		$t_map = array();
+		while( $t_row = db_fetch_array( $t_result ) ) {
+            $t_source_value = $t_row['custom_field_value'];
+            $t_target_values_imploded = $t_row['target_field_values'];
+		    $t_map[$t_source_value] = explode( '|', $t_target_values_imploded );
+        }
 
-		for ( $i = 0 ; $i < db_num_rows( $t_result); $i++ ) {
-			$t_array = db_fetch_array( $t_result );
-			$t_source_value = $t_array['custom_field_value'];
-			$t_target_values_imploded = $t_array['target_field_values'];
-
-			$t_return[] = array($t_source_value, explode( '|', $t_target_values_imploded ));
-		}
-
-		return $t_return;
+		return $t_map;
 	}
 } 
 
