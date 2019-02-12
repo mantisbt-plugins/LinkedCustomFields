@@ -43,7 +43,7 @@
     
 ?>
 
-<form method="post" action="<?php echo plugin_page('configure_custom_field_link_update.php') ?>">
+<form method="post" action="<?php echo plugin_page( 'link_update' ) ?>">
 <?php echo form_security_field( 'configure_custom_field_link' ) ?>
 <br />
 <input type="hidden" name="custom_field_id" id="custom_field_id" value="<?php echo gpc_get_int('custom_field_id')?>" />

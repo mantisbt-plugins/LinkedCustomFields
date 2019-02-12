@@ -23,7 +23,7 @@ $t_page_title = plugin_lang_get( 'configure_custom_field_links' );
 html_robots_noindex();
 layout_page_header( $t_page_title );
 layout_page_begin(__FILE__);
-print_manage_menu( 'configure_custom_field_links' );
+print_manage_menu( 'configure_links' );
 
 $t_custom_fields = custom_field_get_ids();
 $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' .
@@ -77,7 +77,7 @@ foreach ( $t_custom_fields as $t_custom_field ) {
 	}
 		echo '<td>';
 		print_small_button(
-			plugin_page('configure_custom_field_link' ) . "&custom_field_id=$t_custom_field",
+			plugin_page('link_edit' ) . "&custom_field_id=$t_custom_field",
 			plugin_lang_get('edit')
 		);
 		echo '</td>';

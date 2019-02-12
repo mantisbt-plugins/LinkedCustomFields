@@ -47,5 +47,5 @@ if( LinkedCustomFieldsDao::getLinkedFieldId( gpc_get_int('target_custom_field') 
     trigger_error( ERROR_GENERIC , ERROR );
 } else {
     LinkedCustomFieldsDao::replaceValues( $f_source_field_id, $f_target_field_id , $t_value_mappings );
-    header("Location: " . plugin_page( 'configure_custom_field_links.php' ) );
+    header("Location: " . plugin_page( 'configure_links.php' ) );
 }

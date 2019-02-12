@@ -40,7 +40,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	}
 
 	public function manage_custom_field_links( $p_is_admin ) {
-		return array( '<a href="' . plugin_page( 'configure_custom_field_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
+		return array( '<a href="' . plugin_page( 'configure_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
 	}
 
 	function resources( $p_event ) {
