@@ -21,7 +21,7 @@ access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 html_robots_noindex();
 layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
 layout_page_begin(__FILE__);
-print_manage_menu( 'manage_overview_page.php' );
+print_manage_menu( 'configure_custom_field_links' );
 
 $t_custom_fields = custom_field_get_ids();
 $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' .
