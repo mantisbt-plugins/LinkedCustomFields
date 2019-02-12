@@ -42,7 +42,7 @@ foreach( $_POST as $f_post_key => $f_post_value ) {
 
 form_security_purge( 'configure_custom_field_link' );
 
-if( LinkedCustomFieldsDao::getLinkedFieldId( gpc_get_int('target_custom_field') ) ) {
+if( LinkedCustomFieldsDao::getLinkedFieldId( $f_target_field_id ) ) {
     // plugin_get_current('target_field_already_linked')
     trigger_error( ERROR_GENERIC , ERROR );
 } else {
