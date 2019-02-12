@@ -18,8 +18,10 @@
 auth_reauthenticate();
 access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 
+$t_page_title = plugin_lang_get( 'configure_custom_field_links' );
+
 html_robots_noindex();
-layout_page_header(plugin_lang_get( 'configure_custom_field_links' ));
+layout_page_header( $t_page_title );
 layout_page_begin(__FILE__);
 print_manage_menu( 'configure_custom_field_links' );
 
@@ -28,17 +30,32 @@ $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_EN
                      get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
 	
 ?>
-	<br />
-	<div class="table-responsive">
-	<table class="table table-striped table-bordered table-condensed">
-		<thead>
-			<tr class="row-category">
-				<th><?php echo plugin_lang_get('custom_field') ?></th>
-				<th><?php echo plugin_lang_get('linked_to') ?></th>
-				<th><?php echo sprintf(plugin_lang_get('unsupported_field_type'), $t_supported_types); ?></th>
-			</tr>
-		</thead>
-		<tbody>
+
+<div class="col-md-12 col-xs-12">
+<div class="space-10"></div>
+
+<div class="table-container">
+    <div class="widget-box widget-color-blue2">
+        <div class="widget-header widget-header-small">
+            <h4 class="widget-title lighter">
+                <i class="ace-icon fa fa-flask"></i>
+                <?php echo $t_page_title ?>
+            </h4>
+        </div>
+
+        <div class="widget-body">
+            <div class="widget-main no-padding">
+                <div class="table-responsive">
+
+                    <table class="table table-striped table-bordered table-condensed">
+                        <thead>
+                            <tr class="row-category">
+                                <th><?php echo plugin_lang_get('custom_field') ?></th>
+                                <th><?php echo plugin_lang_get('linked_to') ?></th>
+                                <th><?php echo sprintf(plugin_lang_get('unsupported_field_type'), $t_supported_types); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
 <?php 
 foreach ( $t_custom_fields as $t_custom_field ) {
@@ -64,9 +81,15 @@ foreach ( $t_custom_fields as $t_custom_field ) {
 	}
 }
 ?>
-		</tbody>
-	</table>
-	</div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
 
 <?php
 layout_page_end();
