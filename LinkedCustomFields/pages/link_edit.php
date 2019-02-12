@@ -27,8 +27,9 @@ layout_page_begin( __FILE__ );
 print_manage_menu( 'configure_links' );
 
 $f_custom_field = custom_field_get_definition( gpc_get_int('custom_field_id') );
-$t_linked_custom_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $f_custom_field['id'] );
-
+$t_source_field_id = $f_custom_field['id'];
+$t_target_field_id = LinkedCustomFieldsDao::getLinkedFieldId($t_source_field_id);
+$t_mappings = LinkedCustomFieldsDao::getLinkedValuesMap($t_source_field_id);
 $t_target_candidates = array();
 
 $t_custom_fields = custom_field_get_ids();
@@ -71,15 +72,17 @@ foreach( $t_custom_fields as $t_custom_field ) {
                                 <tr>
                                     <th><?php echo plugin_lang_get('linked_to') ?></th>
                                     <td>
-                                        <select id="target_custom_field" name="target_custom_field">
+                                        <select id="target_custom_field" name="target_custom_field"
+                                                data-mappings="<?php echo json_encode( $t_mappings ) ?>"
+                                        >
                                             <option value="">None</option>
 <?php
 	foreach( $t_target_candidates as $t_target_candidate ) {
-		if ( $t_target_candidate['id'] == $f_custom_field['id'] ) {
+		if ( $t_target_candidate['id'] == $t_source_field_id) {
 			continue;
 		}
 
-		$t_selected = $t_linked_custom_field_id == $t_target_candidate['id'] ? ' selected="selected"' : "";
+		$t_selected = $t_target_field_id == $t_target_candidate['id'] ? ' selected="selected"' : "";
 
 		echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
 	}
@@ -128,7 +131,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
 							<tbody>
 <?php foreach( explode('|', $f_custom_field['possible_values'] ) as $t_idx => $t_possible_value ) { ?>
 								<tr>
-									<td> <?php echo $t_possible_value ?></td>
+									<td><?php echo $t_possible_value ?></td>
 									<td>
 										<select id="custom_field_linked_values_<?php echo $t_idx?>"
 												name="custom_field_linked_values_<?php echo $t_idx?>[]"
