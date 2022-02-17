@@ -139,7 +139,7 @@ LCF.refreshTargetFieldOptions = function (targetFieldId) {
     }
 };
 
-jQuery(document).ready(function() {
+$(function() {
     let sourceFieldId = $('#custom_field_id').val();
     let targetField = $('#target_custom_field');
 
@@ -157,7 +157,7 @@ jQuery(document).ready(function() {
             $('#link_area').toggleClass('hidden', false);
         });
 
-    targetField.change(function() {
+    targetField.on('change', function () {
         LCF.refreshTargetFieldOptions(targetField.val());
     });
 });
