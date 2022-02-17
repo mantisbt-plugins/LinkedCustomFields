@@ -150,6 +150,17 @@ LCF.clearSelection = function (id) {
     $(targetList + ' option:selected').prop("selected", false);
 };
 
+/**
+ * Restores the linked values to the original mapping.
+ * @param id
+ */
+LCF.revertSelection = function (id) {
+    let sourceValue = $('#source_field_value_' + id)[0].innerText;
+    let targetList = $('#custom_field_linked_values_' + id);
+
+    targetList.val(this.mappings[sourceValue]);
+};
+
 $(function() {
     let sourceFieldId = $('#custom_field_id').val();
     let targetField = $('#target_custom_field');
@@ -174,5 +185,9 @@ $(function() {
 
     $(".lcf_clear").on('click', function () {
        LCF.clearSelection($(this).data('id'));
+    });
+
+    $(".lcf_revert").on('click', function () {
+       LCF.revertSelection($(this).data('id'));
     });
 });

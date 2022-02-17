@@ -15,6 +15,7 @@
 # along with Linked custom fields plugin for MantisBT.
 # If not, see <http://www.gnu.org/licenses/>.
 
+/** @noinspection PhpUnhandledExceptionInspection */
 auth_reauthenticate();
 access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 
@@ -66,11 +67,15 @@ foreach( $t_custom_fields as $t_custom_field ) {
 						<table class="table table-striped table-bordered table-condensed">
 							<tbody>
 								<tr>
-									<th width="30%"><?php echo plugin_lang_get('custom_field') ?></th>
+									<th class="width-30%"><?php echo plugin_lang_get('custom_field') ?></th>
 									<td><?php echo $f_custom_field['name'] ?></td>
 								</tr>
 								<tr>
-									<th><?php echo plugin_lang_get('linked_to') ?></th>
+									<th>
+										<label for="target_custom_field">
+											<?php echo plugin_lang_get('linked_to') ?>
+										</label>
+									</th>
 									<td>
 										<select id="target_custom_field" name="target_custom_field"
 												data-mappings="<?php echo htmlentities( json_encode( $t_mappings ) ) ?>"
@@ -121,7 +126,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
 			<div class="widget-body">
 				<div class="widget-main no-padding">
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-condensed" align="center">
+						<table class="table table-striped table-bordered table-condensed">
 							<thead>
 								<tr>
 									<th><?php echo plugin_lang_get('source_field_value')?></th>
@@ -131,8 +136,11 @@ foreach( $t_custom_fields as $t_custom_field ) {
 							<tbody>
 <?php foreach( explode('|', $f_custom_field['possible_values'] ) as $t_idx => $t_possible_value ) { ?>
 								<tr>
-									<td><?php echo $t_possible_value ?></td>
+									<td id="source_field_value_<?php echo $t_idx ?>">
+										<?php echo $t_possible_value ?>
+									</td>
 									<td>
+										<!--suppress HtmlFormInputWithoutLabel -->
 										<select id="custom_field_linked_values_<?php echo $t_idx?>"
 												name="custom_field_linked_values_<?php echo $t_idx?>[]"
 												class="lcf_target"
@@ -143,6 +151,12 @@ foreach( $t_custom_fields as $t_custom_field ) {
 												title="<?php echo plugin_lang_get( 'clear_selection_tooltip' ) ?>"
 												data-id="<?php echo $t_idx ?>">
 											<i class="fa fa-trash"></i>
+										</button>
+										<button type="button"
+												class="btn btn-white btn-round btn-xs lcf_revert"
+												title="<?php echo plugin_lang_get( 'revert_changes_tooltip' ) ?>"
+												data-id="<?php echo $t_idx ?>">
+											<i class="fa fa-undo"></i>
 										</button>
 									</td>
 								</tr>
