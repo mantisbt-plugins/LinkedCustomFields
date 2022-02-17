@@ -27,7 +27,7 @@ print_manage_menu( 'configure_links' );
 
 $t_custom_fields = custom_field_get_ids();
 $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_ENUM ) . ', ' .
-                     get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
+					 get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_MULTILIST ) ;
 
 ?>
 
@@ -35,31 +35,31 @@ $t_supported_types = get_enum_element( 'custom_field_type', CUSTOM_FIELD_TYPE_EN
 <div class="space-10"></div>
 
 <div class="table-container">
-    <div class="widget-box widget-color-blue2">
-        <div class="widget-header widget-header-small">
-            <h4 class="widget-title lighter">
-                <i class="ace-icon fa fa-flask"></i>
-                <?php echo $t_page_title ?>
-            </h4>
-        </div>
+	<div class="widget-box widget-color-blue2">
+		<div class="widget-header widget-header-small">
+			<h4 class="widget-title lighter">
+				<i class="ace-icon fa fa-flask"></i>
+				<?php echo $t_page_title ?>
+			</h4>
+		</div>
 
-        <div class="widget-body">
-            <div class="widget-main no-padding">
-                <div class="widget-toolbox padding-8 clearfix">
-                    <?php echo sprintf(plugin_lang_get( 'unsupported_field_type' ), $t_supported_types); ?>
-                </div>
+		<div class="widget-body">
+			<div class="widget-main no-padding">
+				<div class="widget-toolbox padding-8 clearfix">
+					<?php echo sprintf(plugin_lang_get( 'unsupported_field_type' ), $t_supported_types); ?>
+				</div>
 
-                <div class="table-responsive">
+				<div class="table-responsive">
 
-                    <table class="table table-striped table-bordered table-condensed">
-                        <thead>
-                            <tr class="row-category">
-                                <th><?php echo plugin_lang_get( 'custom_field' ) ?></th>
-                                <th><?php echo plugin_lang_get( 'linked_to' ) ?></th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+					<table class="table table-striped table-bordered table-condensed">
+						<thead>
+							<tr class="row-category">
+								<th><?php echo plugin_lang_get( 'custom_field' ) ?></th>
+								<th><?php echo plugin_lang_get( 'linked_to' ) ?></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
 
 <?php
 foreach ( $t_custom_fields as $t_custom_field ) {
@@ -85,12 +85,12 @@ foreach ( $t_custom_fields as $t_custom_field ) {
 	}
 }
 ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 </div>

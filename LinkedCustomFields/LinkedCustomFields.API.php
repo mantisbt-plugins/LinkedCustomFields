@@ -13,10 +13,10 @@ class LinkedCustomFieldsDao {
 	 */
 	static function replaceValues( $p_source_field_id, $p_target_field_id, $p_value_mappings ) {
 
-		$t_data_table = plugin_table('data');
+		$t_data_table = plugin_table( 'data' );
 		$t_query = "DELETE FROM " . $t_data_table . " WHERE custom_field_id = " . db_param();
 
-		db_query( $t_query, array( $p_source_field_id )) ;
+		db_query( $t_query, array( $p_source_field_id ) ) ;
 
 		$t_insert_query = "INSERT INTO " . $t_data_table . "
 			(custom_field_id, custom_field_value_order, custom_field_value, target_field_id, target_field_values)
@@ -24,8 +24,8 @@ class LinkedCustomFieldsDao {
 
 		$t_idx = 0 ;
 
-		foreach ( $p_value_mappings as $t_key => $t_value ) {
-			db_query($t_insert_query, array( $p_source_field_id, $t_idx, $t_key, $p_target_field_id, implode('|', $t_value)));
+		foreach( $p_value_mappings as $t_key => $t_value ) {
+			db_query($t_insert_query, array( $p_source_field_id, $t_idx, $t_key, $p_target_field_id, implode( '|', $t_value ) ) );
 			$t_idx++;
 		}
 	}
@@ -38,9 +38,9 @@ class LinkedCustomFieldsDao {
 	 */
 	static function getLinkedFieldId( $p_source_field_id ) {
 
-		$t_query = "SELECT target_field_id FROM " . plugin_table('data') . " WHERE custom_field_id = " . db_param();
+		$t_query = "SELECT target_field_id FROM " . plugin_table( 'data' ) . " WHERE custom_field_id = " . db_param();
 
-		$t_result = db_query( $t_query, array ( $p_source_field_id ) );
+		$t_result = db_query( $t_query, array( $p_source_field_id ) );
 
 		if( 0 == db_num_rows( $t_result ) ) {
 			return null;
@@ -60,17 +60,17 @@ class LinkedCustomFieldsDao {
 
 		$t_query = "SELECT custom_field_value, target_field_values FROM " . plugin_table( 'data' ) .
 					" WHERE custom_field_id=".db_param() ." ORDER BY custom_field_value_order" ;
-		$t_result = db_query( $t_query, array ( $p_source_field_id ) );
-		if ( 0 == db_num_rows ( $t_result ) ) {
+		$t_result = db_query( $t_query, array( $p_source_field_id ) );
+		if( 0 == db_num_rows( $t_result ) ) {
 			return array();
 		}
 
 		$t_map = array();
 		while( $t_row = db_fetch_array( $t_result ) ) {
-            $t_source_value = $t_row['custom_field_value'];
-            $t_target_values_imploded = $t_row['target_field_values'];
-		    $t_map[$t_source_value] = explode( '|', $t_target_values_imploded );
-        }
+			$t_source_value = $t_row['custom_field_value'];
+			$t_target_values_imploded = $t_row['target_field_values'];
+			$t_map[$t_source_value] = explode( '|', $t_target_values_imploded );
+		}
 
 		return $t_map;
 	}
@@ -88,21 +88,20 @@ class JavascriptUtils {
 
 		$t_field_values_js = '[ ';
 
-		foreach (  $p_array as $t_custom_field_value ) {
-			$t_field_values_js .= '"'.string_attribute($t_custom_field_value).'" ,';
+		foreach( $p_array as $t_custom_field_value ) {
+			$t_field_values_js .= '"'.string_attribute( $t_custom_field_value ).'" ,';
 		}
 
-		$t_field_values_js = rtrim($t_field_values_js, ',');
+		$t_field_values_js = rtrim( $t_field_values_js, ',' );
 		$t_field_values_js .= ']';
 
 		return $t_field_values_js;
 	}
 
-	static function consoleLog( $p_message, $p_level = self::LOG_INFO) {
+	static function consoleLog( $p_message, $p_level = self::LOG_INFO ) {
 
-
-		$t_method;
-		switch ( $p_level ) {
+		$t_method = false;
+		switch( $p_level ) {
 			case self::LOG_DEBUG:
 				$t_method = 'debug';
 				break;
@@ -120,8 +119,10 @@ class JavascriptUtils {
 				break;
 		}
 
-		if ( $t_method )
-			return 'if ( console && console.'.$t_method.' ) console.' . $t_method .'("' . $p_message .'");'."\n";
+		if( $t_method ) {
+			return 'if( console && console.' . $t_method . ' ) console.'
+				. $t_method . '( "' . $p_message . '" );' . "\n";
+		}
+		return '';
 	}
 }
-?>

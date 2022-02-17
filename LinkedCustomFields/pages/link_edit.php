@@ -65,17 +65,17 @@ foreach( $t_custom_fields as $t_custom_field ) {
 					<div class="table-responsive">
 						<table class="table table-striped table-bordered table-condensed">
 							<tbody>
-                                <tr>
-                                    <th width="30%"><?php echo plugin_lang_get('custom_field') ?></th>
-                                    <td><?php echo $f_custom_field['name'] ?></td>
-                                </tr>
-                                <tr>
-                                    <th><?php echo plugin_lang_get('linked_to') ?></th>
-                                    <td>
-                                        <select id="target_custom_field" name="target_custom_field"
-                                                data-mappings="<?php echo htmlentities( json_encode( $t_mappings ) ) ?>"
-                                        >
-                                            <option value="">None</option>
+								<tr>
+									<th width="30%"><?php echo plugin_lang_get('custom_field') ?></th>
+									<td><?php echo $f_custom_field['name'] ?></td>
+								</tr>
+								<tr>
+									<th><?php echo plugin_lang_get('linked_to') ?></th>
+									<td>
+										<select id="target_custom_field" name="target_custom_field"
+												data-mappings="<?php echo htmlentities( json_encode( $t_mappings ) ) ?>"
+										>
+											<option value="">None</option>
 <?php
 	foreach( $t_target_candidates as $t_target_candidate ) {
 		if ( $t_target_candidate['id'] == $t_source_field_id) {
@@ -87,10 +87,10 @@ foreach( $t_custom_fields as $t_custom_field ) {
 		echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
 	}
 ?>
-                                        </select>
-                                        <span id="loading"><?php echo plugin_lang_get( 'loading' ); ?></span>
-                                    </td>
-                                </tr>
+										</select>
+										<span id="loading"><?php echo plugin_lang_get( 'loading' ); ?></span>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
