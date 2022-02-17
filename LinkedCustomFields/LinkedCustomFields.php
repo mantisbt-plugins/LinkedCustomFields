@@ -33,7 +33,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 
 		$this->author = "Robert Munteanu";
 		$this->contact = "robert@lmn.ro";
-		$this->url ="http://www.mantisbt.org/wiki/doku.php/mantisbt:linkedcustomfields";
+		$this->url ="https://mantisbt.org/wiki/doku.php/mantisbt:linkedcustomfields";
 	}
 
 	public function hooks() {
@@ -50,10 +50,17 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 		);
 	}
 
+	/** @noinspection PhpUnused, PhpUnusedParameterInspection */
 	public function manage_custom_field_links( $p_is_admin ) {
 		return array( '<a href="' . plugin_page( 'configure_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
 	}
 
+	/**
+	 * @param $p_event
+	 * @return string
+	 *
+	 * @noinspection PhpUnusedParameterInspection
+	 */
 	function resources( $p_event ) {
 		$t_bug_id = gpc_get_int('bug_id', -1);
 		$t_m_id = gpc_get_int('m_id', 0);
@@ -63,6 +70,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 		if ( $t_bug_id != -1 ) {
 			return '<script type="text/javascript" src="' . plugin_page( 'bug_page_custom_field_links.php' ) . '&amp;bug_id='. $t_bug_id .'&amp;m_id='.$t_m_id.'"></script>';
 		}
+		return '';
 	}
 
 	public function init() {
@@ -92,6 +100,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 * @param string $p_event_name The event name
 	 * @param array  $p_event_args The event arguments
 	 * @return void
+	 *
+	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function routes( $p_event_name, $p_event_args ) {
 		$t_app = $p_event_args['app'];
@@ -115,6 +125,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 * @param Slim\Http\Response $response
 	 * @param array $args [bug_id = Bug Id for patterns replacement]
 	 * @return Slim\Http\Response
+	 *
+	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function route_values( $request, $response, $args ) {
 		# Set the reference Bug Id for placeholders replacements
@@ -166,6 +178,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 * @param Slim\Http\Response $response
 	 * @param array $args [bug_id = Bug Id for patterns replacement]
 	 * @return Slim\Http\Response
+	 *
+	 * @noinspection PhpUnusedParameterInspection
 	 */
 	public function route_mapping( $request, $response, $args ) {
 		# Set the reference Bug Id for placeholders replacements

@@ -15,6 +15,7 @@
 # along with Linked custom fields plugin for MantisBT.
 # If not, see <http://www.gnu.org/licenses/>.
 
+/** @noinspection PhpUnhandledExceptionInspection */
 auth_reauthenticate();
 access_ensure_global_level( config_get( 'manage_custom_fields_threshold' ) );
 
