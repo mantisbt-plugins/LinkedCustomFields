@@ -138,6 +138,12 @@ foreach( $t_custom_fields as $t_custom_field ) {
 												class="lcf_target"
 												multiple="multiple">
 										</select>
+										<button type="button"
+												class="btn btn-white btn-round btn-xs lcf_clear"
+												title="<?php echo plugin_lang_get( 'clear_selection_tooltip' ) ?>"
+												data-id="<?php echo $t_idx ?>">
+											<i class="fa fa-trash"></i>
+										</button>
 									</td>
 								</tr>
 <?php } ?>

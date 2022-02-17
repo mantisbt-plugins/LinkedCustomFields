@@ -99,22 +99,24 @@ LCF.refreshTargetFieldOptions = function (targetFieldId) {
      */
     function updateUI (targetFieldId) {
         let srcFieldId = $('#custom_field_id').val();
+        let srcFieldValues = LCF.cachedValues[srcFieldId];
         let tgtFieldValues = LCF.cachedValues[targetFieldId];
 
-        if (LCF.mappingTarget === targetFieldId) {
-            console.log(LCF.mappings);
-        }
-
         // Add target CF's values to each select
-        for (let srcField in LCF.cachedValues[srcFieldId]) {
+        for (let srcField in srcFieldValues) {
             let control = $('#custom_field_linked_values_' + srcField);
 
+            // Populate the select with target field values
             control.empty();
             for (let tgtField in tgtFieldValues) {
                 control.append($('<option></option>', {
-                    value: tgtField,
                     text: tgtFieldValues[tgtField]
                 }));
+            }
+
+            // Select default values
+            if (LCF.mappingTarget === targetFieldId) {
+                control.val(LCF.mappings[srcFieldValues[srcField]]);
             }
         }
 
@@ -139,6 +141,15 @@ LCF.refreshTargetFieldOptions = function (targetFieldId) {
     }
 };
 
+/**
+ * Deselects all linked values.
+ * @param id
+ */
+LCF.clearSelection = function (id) {
+    let targetList = '#custom_field_linked_values_' + id;
+    $(targetList + ' option:selected').prop("selected", false);
+};
+
 $(function() {
     let sourceFieldId = $('#custom_field_id').val();
     let targetField = $('#target_custom_field');
@@ -159,5 +170,9 @@ $(function() {
 
     targetField.on('change', function () {
         LCF.refreshTargetFieldOptions(targetField.val());
+    });
+
+    $(".lcf_clear").on('click', function () {
+       LCF.clearSelection($(this).data('id'));
     });
 });
