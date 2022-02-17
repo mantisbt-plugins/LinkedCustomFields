@@ -1,8 +1,6 @@
 <?php 
 header( "Content-Type: text/javascript" );
 
-require_once 'core.php';
-
 $t_bug_id = gpc_get_int( 'bug_id' );
 $t_master_bug_id = gpc_get_int( 'm_id', 0 );
 if( $t_bug_id == 0 ) {
