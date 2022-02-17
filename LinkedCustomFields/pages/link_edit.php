@@ -73,7 +73,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
                                     <th><?php echo plugin_lang_get('linked_to') ?></th>
                                     <td>
                                         <select id="target_custom_field" name="target_custom_field"
-                                                data-mappings="<?php echo json_encode( $t_mappings ) ?>"
+                                                data-mappings="<?php echo htmlentities( json_encode( $t_mappings ) ) ?>"
                                         >
                                             <option value="">None</option>
 <?php
@@ -114,9 +114,9 @@ foreach( $t_custom_fields as $t_custom_field ) {
 				</h4>
 			</div>
 
-            <div class="widget-toolbox padding-8 clearfix">
-                <?php echo sprintf( plugin_lang_get( 'warning_no_mapping' ), $f_custom_field['name'] ) ; ?>
-            </div>
+			<div class="widget-toolbox padding-8 clearfix">
+				<?php echo sprintf( plugin_lang_get( 'warning_no_mapping' ), $f_custom_field['name'] ) ; ?>
+			</div>
 
 			<div class="widget-body">
 				<div class="widget-main no-padding">

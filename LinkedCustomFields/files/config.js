@@ -39,7 +39,8 @@ LCF.rest_api = function (endpoint) {
  * Cache for custom field values retrieved via AJAX
  */
 LCF.cachedValues = {};
-
+LCF.mappingTarget = null;
+LCF.mappings = {};
 
 /**
  * Retrieves and caches CF values via AJAX.
@@ -67,6 +68,26 @@ LCF.getCustomFieldOptions = function (targetFieldId) {
 };
 
 /**
+ * Retrieves and caches mappings
+ * @param {int} sourceFieldId
+ * @returns {*}
+ */
+LCF.getMappings = function (sourceFieldId) {
+    if(!sourceFieldId || LCF.cachedValues.hasOwnProperty(sourceFieldId)) {
+        return;
+    }
+
+    LCF.sourceFieldId = sourceFieldId;
+    return $.getJSON(this.rest_api('mapping') + '/' + sourceFieldId)
+        .done(function (data) {
+            LCF.mappings = data;
+        })
+        .fail(function() {
+            console.error('Error occurred while retrieving mappings');
+        });
+};
+
+/**
  * Retrieve CF data for given field id and update UI.
  * @param targetFieldId
  */
@@ -79,6 +100,10 @@ LCF.refreshTargetFieldOptions = function (targetFieldId) {
     function updateUI (targetFieldId) {
         let srcFieldId = $('#custom_field_id').val();
         let tgtFieldValues = LCF.cachedValues[targetFieldId];
+
+        if (LCF.mappingTarget === targetFieldId) {
+            console.log(LCF.mappings);
+        }
 
         // Add target CF's values to each select
         for (let srcField in LCF.cachedValues[srcFieldId]) {
@@ -115,12 +140,17 @@ LCF.refreshTargetFieldOptions = function (targetFieldId) {
 };
 
 jQuery(document).ready(function() {
+    let sourceFieldId = $('#custom_field_id').val();
     let targetField = $('#target_custom_field');
 
-    // Retrieve CF data for parent and child custom fields in parallel
+    LCF.mappingTarget = targetField.val();
+    LCF.mappings = targetField.data('mappings');
+
+    // Retrieve CF data for mappings, parent and child custom fields in parallel
     $.when(
-        LCF.getCustomFieldOptions($('#custom_field_id').val()),
+        LCF.getCustomFieldOptions(sourceFieldId),
         LCF.getCustomFieldOptions(targetField.val())
+        // LCF.getMappings(sourceFieldId)
         ).done(function () {
             LCF.refreshTargetFieldOptions(targetField.val());
             // Remove no longer needed 'hidden' class, as we have set display prop by now
