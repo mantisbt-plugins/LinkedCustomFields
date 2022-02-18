@@ -109,7 +109,7 @@ var refreshLinkedValues = function(fieldId, fieldValue) {
 	targetFieldRef.empty();
 	for ( var i = 0 ; i < targetValues.length; i++ ) {
 		var targetValue = targetValues[i];
-		targetFieldRef.append(jQuery('<option/>').
+		targetFieldRef.append(jQuery('<option></option>').
 			attr('value', targetValue).
 			text(targetValue));
 	}
