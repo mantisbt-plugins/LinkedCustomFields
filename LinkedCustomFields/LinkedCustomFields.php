@@ -23,8 +23,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	const ERROR_ALREADY_LINKED = 'error_already_linked';
 
 	public function register() {
-		$this->name = plugin_lang_get("title");
-		$this->description = plugin_lang_get("description");
+		$this->name = plugin_lang_get( "title" );
+		$this->description = plugin_lang_get( "description" );
 
 		$this->version = "2.0.0-dev";
 		$this->requires = array(
@@ -33,7 +33,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 
 		$this->author = "Robert Munteanu";
 		$this->contact = "robert@lmn.ro";
-		$this->url ="https://mantisbt.org/wiki/doku.php/mantisbt:linkedcustomfields";
+		$this->url = "https://mantisbt.org/wiki/doku.php/mantisbt:linkedcustomfields";
 	}
 
 	public function hooks() {
@@ -52,7 +52,11 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 
 	/** @noinspection PhpUnused, PhpUnusedParameterInspection */
 	public function manage_custom_field_links( $p_is_admin ) {
-		return array( '<a href="' . plugin_page( 'configure_links' ) . '">' . plugin_lang_get( 'configure_custom_field_links' ) . '</a>', );
+		return array(
+			'<a href="' . plugin_page( 'configure_links' ) . '">'
+			. plugin_lang_get( 'configure_custom_field_links')
+			. '</a>',
+		);
 	}
 
 	/**
@@ -62,13 +66,18 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 * @noinspection PhpUnusedParameterInspection
 	 */
 	function resources( $p_event ) {
-		$t_bug_id = gpc_get_int('bug_id', -1);
-		$t_m_id = gpc_get_int('m_id', 0);
-		if ( $t_bug_id == -1 && basename($_SERVER['SCRIPT_NAME']) == 'bug_report_page.php' ) {
+		$t_bug_id = gpc_get_int( 'bug_id', -1 );
+		$t_m_id = gpc_get_int( 'm_id', 0 );
+		if( $t_bug_id == -1
+			&& basename( $_SERVER['SCRIPT_NAME'] ) == 'bug_report_page.php'
+		) {
 			$t_bug_id = 0;
 		}
-		if ( $t_bug_id != -1 ) {
-			return '<script type="text/javascript" src="' . plugin_page( 'bug_page_custom_field_links.php' ) . '&amp;bug_id='. $t_bug_id .'&amp;m_id='.$t_m_id.'"></script>';
+		if( $t_bug_id != -1 ) {
+			return '<script type="text/javascript" src="'
+				. plugin_page( 'bug_page_custom_field_links.php' )
+				. '&amp;bug_id=' . $t_bug_id . '&amp;m_id=' . $t_m_id
+				. '"></script>';
 		}
 		return '';
 	}
@@ -170,9 +179,9 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 *
 	 * Returned JSON structure:
 	 * - {array}      List of CF link mappings, with structure
-     *   - {array}    CF mapping
-     *     - {string}  Source CF value
-     *     - {array}   Allowed target CF values
+	 *   - {array}    CF mapping
+	 *     - {string}  Source CF value
+	 *     - {array}   Allowed target CF values
 	 *
 	 * @param Slim\Http\Request $request
 	 * @param Slim\Http\Response $response
@@ -184,17 +193,17 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	public function route_mapping( $request, $response, $args ) {
 		# Set the reference Bug Id for placeholders replacements
 		if( isset( $args['field_id'] ) ) {
-            $t_field_id = (int)$args['field_id'];
+			$t_field_id = (int)$args['field_id'];
 
-            plugin_push_current( $this->basename );
-            $t_map = LinkedCustomFieldsDao::getLinkedValuesMap( $t_field_id );
-            plugin_pop_current();
-        } else {
-            return $response->withStatus(
-                HTTP_STATUS_BAD_REQUEST,
-                "Invalid Custom Field Id"
-            );
-        }
+			plugin_push_current( $this->basename );
+			$t_map = LinkedCustomFieldsDao::getLinkedValuesMap( $t_field_id );
+			plugin_pop_current();
+		} else {
+			return $response->withStatus(
+				HTTP_STATUS_BAD_REQUEST,
+				"Invalid Custom Field Id"
+			);
+		}
 
 		# Return possible values
 		return $response
