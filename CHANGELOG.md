@@ -8,6 +8,27 @@ specification.
 
 --------------------------------------------------------------------------------
 
+## [Unreleased]
+
+### Added
+
+- Support for MantisBT 2.x
+- In Edit Links page, add buttons to 
+  - clear all selected target values
+  - revert changes to selected values
+
+### Changed
+
+- Plugin files moved to repository root
+- Moved JavaScript code to separate files
+- Use MantisBT REST API to retrieve data from JavaScript
+- Updated French translation
+
+### Removed
+
+- Support for MantisBT 1.x
+
+
 ## [1.0.1] - 2015-07-16
 
 ### Added
