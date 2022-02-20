@@ -32,7 +32,7 @@ var LCF = LCF || {};
 LCF.rest_api = function (endpoint) {
     // Using the full URL (through index.php) to avoid issues on sites
     // where URL rewriting is not working
-    return "/mantis/api/rest/index.php/plugins/LinkedCustomFields/" + endpoint;
+    return "api/rest/index.php/plugins/LinkedCustomFields/" + endpoint;
 };
 
 /**
