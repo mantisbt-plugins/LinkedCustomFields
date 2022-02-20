@@ -70,10 +70,10 @@ foreach( $t_custom_fields as $t_custom_field ) {
 			<div class="widget-body">
 				<div class="widget-main no-padding">
 					<div class="table-responsive">
-						<table class="table table-striped table-bordered table-condensed">
+						<table class="table table-striped table-condensed">
 							<tbody>
 								<tr>
-									<th class="width-30%"><?php echo plugin_lang_get('custom_field') ?></th>
+									<th class="width-30"><?php echo plugin_lang_get('custom_field') ?></th>
 									<td><?php echo $f_custom_field['name'] ?></td>
 								</tr>
 								<tr>
