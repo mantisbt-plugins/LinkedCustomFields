@@ -93,9 +93,9 @@ var LinkedCustomFieldsUtil = {
 	},
 	findCustomFieldByFieldId: function(fieldId) {
 
-		var fieldRef = jQuery('[name=custom_field_' + fieldId  +']');
+		var fieldRef = jQuery('[name="custom_field_' + fieldId  +'"]');
 		if ( fieldRef.length == 0 ) {
-			fieldRef = jQuery('[name=custom_field_' + fieldId  +'[]]');
+			fieldRef = jQuery('[name="custom_field_' + fieldId  +'[]"]');
 		}
 
 		return fieldRef;
