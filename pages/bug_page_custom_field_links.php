@@ -74,7 +74,8 @@ foreach( $t_all_custom_field_ids as $t_custom_field_id ) {
 		echo 'linkedFieldValues["'.$t_custom_field_id."\"] = {};\n";
 
 		foreach( $t_linked_values as $t_source_value => $t_target_values ) {
-			echo 'linkedFieldValues["'.$t_custom_field_id.'"]["'. $t_source_value.'"] = ' . JavascriptUtils::toJSArray( $t_target_values ).";\n";
+			echo 'linkedFieldValues["' . $t_custom_field_id . '"]["' . addslashes( $t_source_value ) . '"] = '
+				. JavascriptUtils::toJSArray( $t_target_values ).";\n";
 		}
 	}
 }
