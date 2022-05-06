@@ -28,6 +28,20 @@ specification.
 
 - Support for MantisBT 1.x
 
+### Fixed
+
+- Mapping section is not displayed
+  [#4](https://github.com/mantisbt-plugins/LinkedCustomFields/pull/4)
+- Linked values do not work for multiselection list custom fields
+  [#5](https://github.com/mantisbt-plugins/LinkedCustomFields/pull/5)
+- Linking not working for custom fields containing double-quotes
+  [#6](https://github.com/mantisbt-plugins/LinkedCustomFields/pull/6)
+
+### Security
+
+- Sanitize field names and values
+  [#7](https://github.com/mantisbt-plugins/LinkedCustomFields/pull/7)
+
 
 ## [1.0.1] - 2015-07-16
 
