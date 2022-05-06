@@ -74,11 +74,11 @@ foreach ( $t_custom_fields as $t_custom_field ) {
 	if ( $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_ENUM ||
 		 $t_custom_field_def['type'] == CUSTOM_FIELD_TYPE_MULTILIST)
 	{
-		echo '<td>'. string_display_line( $t_custom_field_def['name'] ).'</td>';
+		echo '<td>'. string_attribute( $t_custom_field_def['name'] ).'</td>';
 		$t_linked_field_id = LinkedCustomFieldsDao::getLinkedFieldId( $t_custom_field );
 		if ( $t_linked_field_id ) {
 			$t_linked_field = custom_field_get_definition( $t_linked_field_id );
-			echo '<td>' . $t_linked_field['name'] .'</td>';
+			echo '<td>' . string_attribute($t_linked_field['name']) .'</td>';
 		} else {
 			echo '<td> None </td>';
 	}

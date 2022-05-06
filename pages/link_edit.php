@@ -74,7 +74,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
 							<tbody>
 								<tr>
 									<th class="width-30"><?php echo plugin_lang_get('custom_field') ?></th>
-									<td><?php echo $f_custom_field['name'] ?></td>
+									<td><?php echo string_attribute($f_custom_field['name']) ?></td>
 								</tr>
 								<tr>
 									<th>
@@ -95,7 +95,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
 
 		$t_selected = $t_target_field_id == $t_target_candidate['id'] ? ' selected="selected"' : "";
 
-		echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'.$t_target_candidate['name'].'</option>';
+		echo '<option' . $t_selected . ' value="' . $t_target_candidate['id'] .'">'. string_attribute($t_target_candidate['name']) .'</option>';
 	}
 ?>
 										</select>
@@ -126,7 +126,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
 			</div>
 
 			<div class="widget-toolbox padding-8 clearfix">
-				<?php echo sprintf( plugin_lang_get( 'warning_no_mapping' ), $f_custom_field['name'] ) ; ?>
+				<?php echo sprintf( plugin_lang_get( 'warning_no_mapping' ), string_attribute($f_custom_field['name']) ) ; ?>
 			</div>
 
 			<div class="widget-body">
@@ -143,7 +143,7 @@ foreach( $t_custom_fields as $t_custom_field ) {
 <?php foreach( explode('|', $f_custom_field['possible_values'] ) as $t_idx => $t_possible_value ) { ?>
 								<tr>
 									<td id="source_field_value_<?php echo $t_idx ?>">
-										<?php echo $t_possible_value ?>
+										<?php echo string_attribute($t_possible_value) ?>
 									</td>
 									<td>
 										<!--suppress HtmlFormInputWithoutLabel -->
