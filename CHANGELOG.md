@@ -8,7 +8,7 @@ specification.
 
 --------------------------------------------------------------------------------
 
-## [Unreleased]
+## [2.0.0] - 2022-05-08
 
 ### Added
 
@@ -66,7 +66,6 @@ specification.
 - Initial release
 
 
-[Unreleased]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/v1.0.1...master
-
+[2.0.0]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/v1.0.1...2.0.0
 [1.0.1]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/v1.0.0...v1.0.1
 [1.0]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/1b2a1482f931ae21b5cdad7e710b8c8a574b3915...v1.0.0
