@@ -36,9 +36,9 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 			"MantisCore" => "2.3.0",
 		);
 
-		$this->author = "Robert Munteanu";
-		$this->contact = "robert@lmn.ro";
-		$this->url = "https://mantisbt.org/wiki/doku.php/mantisbt:linkedcustomfields";
+		$this->author = "Robert Munteanu, Damien Regad";
+		$this->contact = "robert@lmn.ro,dregad@mantisbt.org";
+		$this->url = "https://github.com/mantisbt-plugins/LinkedCustomFields";
 	}
 
 	public function hooks() {
