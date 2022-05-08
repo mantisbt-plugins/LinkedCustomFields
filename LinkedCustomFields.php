@@ -115,7 +115,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 * @param array  $p_event_args The event arguments
 	 * @return void
 	 *
-	 * @noinspection PhpUnusedParameterInspection
+	 * @noinspection PhpUnused, PhpUnusedParameterInspection
 	 */
 	public function routes( $p_event_name, $p_event_args ) {
 		$t_app = $p_event_args['app'];
