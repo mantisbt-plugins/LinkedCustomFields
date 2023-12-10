@@ -8,6 +8,15 @@ specification.
 
 --------------------------------------------------------------------------------
 
+## [2.0.1] - 2023-12-10
+
+### Security
+
+- XSS in linked Custom Field's values
+  [#10](https://github.com/mantisbt-plugins/LinkedCustomFields/issue/10),
+  [#11](https://github.com/mantisbt-plugins/LinkedCustomFields/issue/11)
+
+
 ## [2.0.0] - 2022-05-08
 
 ### Added
@@ -66,6 +75,7 @@ specification.
 - Initial release
 
 
+[2.0.1]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/v1.0.1...2.0.0
 [1.0.1]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/v1.0.0...v1.0.1
 [1.0]: https://github.com/mantisbt-plugins/LinkedCustomFields/compare/1b2a1482f931ae21b5cdad7e710b8c8a574b3915...v1.0.0
