@@ -41,10 +41,13 @@ as per table below:
 
 ## Usage
 
-### Configuring Linked Custom Field
+### Configuring Linked Custom Fields
 
 The plugin's configuration page is accessed from the _Manage_ menu, where a new 
-item named _Configure custom field links_ is present. 
+item named _Configure custom field links_ is present.
+
+Access to this page is restricted to users having the *manage_custom_fields_threshold*
+(standard MantisBT config option, defaulting to ADMINISTRATOR).
 
 **Note:** the plugin only supports ENUMERATION and MULTI_SELECT custom field types.
 
@@ -59,7 +62,7 @@ item named _Configure custom field links_ is present.
 
 ![Screenshot of LinkedCustomFields plugin's Configure custom field links edit page](doc/linked-custom-fields-edit.png)
 
-### Using LinkedCustomFields
+### Using Linked Custom Fields
 
 When editing an issue in a project where the linked custom fields are available,
 once a value from the source custom field has been selected, only the configured
