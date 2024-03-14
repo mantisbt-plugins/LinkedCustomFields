@@ -55,7 +55,11 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 		);
 	}
 
-	/** @noinspection PhpUnused */
+	/**
+	 * Hook for EVENT_MENU_MANAGE.
+	 *
+	 * @noinspection PhpUnused
+	 */
 	public function manage_custom_field_links() {
 		if( !access_has_global_level( config_get( 'manage_custom_fields_threshold' ) ) ) {
 			return [];
@@ -69,6 +73,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	}
 
 	/**
+	 * Hook for EVENT_LAYOUT_RESOURCES.
+	 *
 	 * @return string
 	 */
 	function resources() {
@@ -110,10 +116,13 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	}
 
 	/**
+	 * Hook for EVENT_REST_API_ROUTES.
+	 *
 	 * Add the RESTful routes handled by this plugin.
 	 *
 	 * @param string $p_event_name The event name
 	 * @param array  $p_event_args The event arguments
+	 *
 	 * @return void
 	 *
 	 * @noinspection PhpUnused, PhpUnusedParameterInspection
