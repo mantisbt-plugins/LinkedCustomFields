@@ -18,6 +18,8 @@
  * You should have received a copy of the GNU General Public License
  * along with Linked custom fields plugin for MantisBT.
  * If not, see <http://www.gnu.org/licenses/>.
+ *
+ * @noinspection PhpMissingParamTypeInspection, PhpMissingReturnTypeInspection
  */
 
 class LinkedCustomFieldsPlugin extends MantisPlugin {
@@ -126,6 +128,7 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	 * @return void
 	 *
 	 * @noinspection PhpUnused, PhpUnusedParameterInspection
+	 * @noinspection PhpVariableIsUsedOnlyInClosureInspection Using $this inside closure does not work
 	 */
 	public function routes( $p_event_name, $p_event_args ) {
 		$t_app = $p_event_args['app'];
