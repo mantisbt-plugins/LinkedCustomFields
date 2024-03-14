@@ -57,6 +57,10 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 
 	/** @noinspection PhpUnused, PhpUnusedParameterInspection */
 	public function manage_custom_field_links( $p_is_admin ) {
+		if( !access_has_global_level( config_get( 'manage_custom_fields_threshold' ) ) ) {
+			return [];
+		}
+
 		return array(
 			'<a href="' . plugin_page( 'configure_links' ) . '">'
 			. plugin_lang_get( 'configure_custom_field_links')
