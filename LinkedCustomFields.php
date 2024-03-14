@@ -55,8 +55,8 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 		);
 	}
 
-	/** @noinspection PhpUnused, PhpUnusedParameterInspection */
-	public function manage_custom_field_links( $p_is_admin ) {
+	/** @noinspection PhpUnused */
+	public function manage_custom_field_links() {
 		if( !access_has_global_level( config_get( 'manage_custom_fields_threshold' ) ) ) {
 			return [];
 		}
@@ -69,12 +69,9 @@ class LinkedCustomFieldsPlugin extends MantisPlugin {
 	}
 
 	/**
-	 * @param $p_event
 	 * @return string
-	 *
-	 * @noinspection PhpUnusedParameterInspection
 	 */
-	function resources( $p_event ) {
+	function resources() {
 		$t_bug_id = gpc_get_int( 'bug_id', -1 );
 		$t_m_id = gpc_get_int( 'm_id', 0 );
 		if( $t_bug_id == -1
